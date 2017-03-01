@@ -131,6 +131,26 @@ bin_cfgs = [
         'bins_y': [0, 0.9, 1.2, 2.1, 2.4]
     },
     {
+        'name': 'Trg24_Iso_pt_bins_inc_eta',
+        'var': 'm_ll(50,75,125)',
+        'tag': 'muon_p && trg_t_IsoMu24 && id_p && iso_p < 0.15',
+        'probe': 'trg_p_IsoMu24',
+        'binvar_x': 'pt_p',
+        'bins_x': [20., 21., 22., 23., 24., 25., 30., 40., 50., 60., 80., 100., 200., 1000.],
+        'binvar_y': 'eta_p',
+        'bins_y': [-2.4, 2.4]
+    },
+    {
+        'name': 'Trg24_Iso_pt_eta_bins',
+        'var': 'm_ll(50,75,125)',
+        'tag': 'muon_p && trg_t_IsoMu24 && id_p && iso_p < 0.15',
+        'probe': 'trg_p_IsoMu24',
+        'binvar_x': 'pt_p',
+        'bins_x': [20., 21., 22., 23., 24., 25., 30., 40., 50., 60., 80., 100., 200., 1000.],
+        'binvar_y': 'abs(eta_p)',
+        'bins_y': [0, 0.9, 1.2, 2.1, 2.4]
+    },
+    {
         'name': 'TrgMT_Iso_pt_bins_inc_eta',
         'var': 'm_ll(50,75,125)',
         'tag': 'muon_p && trg_t_IsoMu22 && trg_t_IsoMu19Tau && id_p && iso_p < 0.15',
@@ -191,6 +211,26 @@ bin_cfgs = [
         'bins_y': [0, 0.9, 1.2, 2.1, 2.4]
     },
     {
+        'name': 'Trg24OR_Iso_pt_bins_inc_eta',
+        'var': 'm_ll(50,75,125)',
+        'tag': 'muon_p && trg_t_IsoMu24 && id_p && iso_p < 0.15',
+        'probe': 'trg_p_IsoMu24 || trg_p_IsoTkMu24',
+        'binvar_x': 'pt_p',
+        'bins_x': [20., 21., 22., 23., 24., 25., 30., 40., 50., 60., 80., 100., 200., 1000.],
+        'binvar_y': 'eta_p',
+        'bins_y': [-2.4, 2.4]
+    },
+    {
+        'name': 'Trg24OR_Iso_pt_eta_bins',
+        'var': 'm_ll(50,75,125)',
+        'tag': 'muon_p && trg_t_IsoMu24 && id_p && iso_p < 0.15',
+        'probe': 'trg_p_IsoMu24 || trg_p_IsoTkMu24',
+        'binvar_x': 'pt_p',
+        'bins_x': [20., 21., 22., 23., 24., 25., 30., 40., 50., 60., 80., 100., 200., 1000.],
+        'binvar_y': 'abs(eta_p)',
+        'bins_y': [0, 0.9, 1.2, 2.1, 2.4]
+    },
+    {
         'name': 'TrgOR3_Iso_pt_bins_inc_eta',
         'var': 'm_ll(50,75,125)',
         'tag': 'muon_p && trg_t_IsoMu22 && id_p && iso_p < 0.15',
@@ -205,6 +245,26 @@ bin_cfgs = [
         'var': 'm_ll(50,75,125)',
         'tag': 'muon_p && trg_t_IsoMu22 && id_p && iso_p < 0.15',
         'probe': 'trg_p_IsoMu22 || trg_p_IsoTkMu22 || trg_p_PFTau120',
+        'binvar_x': 'pt_p',
+        'bins_x': [20., 21., 22., 23., 24., 25., 30., 40., 50., 60., 80., 100., 200., 1000.],
+        'binvar_y': 'abs(eta_p)',
+        'bins_y': [0, 0.9, 1.2, 2.1, 2.4]
+    },
+    {
+        'name': 'Trg24OR3_Iso_pt_bins_inc_eta',
+        'var': 'm_ll(50,75,125)',
+        'tag': 'muon_p && trg_t_IsoMu24 && id_p && iso_p < 0.15',
+        'probe': 'trg_p_IsoMu24 || trg_p_IsoTkMu24 || trg_p_PFTau120',
+        'binvar_x': 'pt_p',
+        'bins_x': [20., 21., 22., 23., 24., 25., 30., 40., 50., 60., 80., 100., 200., 1000.],
+        'binvar_y': 'eta_p',
+        'bins_y': [-2.4, 2.4]
+    },
+    {
+        'name': 'Trg24OR3_Iso_pt_eta_bins',
+        'var': 'm_ll(50,75,125)',
+        'tag': 'muon_p && trg_t_IsoMu24 && id_p && iso_p < 0.15',
+        'probe': 'trg_p_IsoMu24 || trg_p_IsoTkMu24 || trg_p_PFTau120',
         'binvar_x': 'pt_p',
         'bins_x': [20., 21., 22., 23., 24., 25., 30., 40., 50., 60., 80., 100., 200., 1000.],
         'binvar_y': 'abs(eta_p)',
@@ -286,15 +346,22 @@ for cfg in bin_cfgs:
 
 
 trees = {
-    'DYJetsToLL': analysis.TTreeEvaluator('ZmmTP', 'output/HTT2016Studies_Aug16/ZmmTP/DYJetsToLL.root'),
-    'Data': analysis.TTreeEvaluator('ZmmTP', 'output/HTT2016Studies_Aug16/ZmmTP/SingleMuon.root')
+    'DYJetsToLL': analysis.TTreeEvaluator('inclusive/ZmmTP', 'output/HTT2016Studies_Jan11/ZmmTP/DYJetsToLLM50.root'),
+    'Data': analysis.TTreeEvaluator('inclusive/ZmmTP', 'output/HTT2016Studies_Jan11/ZmmTP/SingleMuon.root') #,
+    #'DataB': analysis.TTreeEvaluator('inclusive/ZmmTP', 'output/HTT2016Studies_Jan12/ZmmTP/SingleMuonB.root'),
+    #'DataC': analysis.TTreeEvaluator('inclusive/ZmmTP', 'output/HTT2016Studies_Jan12/ZmmTP/SingleMuonC.root'),
+    #'DataD': analysis.TTreeEvaluator('inclusive/ZmmTP', 'output/HTT2016Studies_Jan12/ZmmTP/SingleMuonD.root'),
+    #'DataE': analysis.TTreeEvaluator('inclusive/ZmmTP', 'output/HTT2016Studies_Jan12/ZmmTP/SingleMuonE.root'),
+    #'DataF': analysis.TTreeEvaluator('inclusive/ZmmTP', 'output/HTT2016Studies_Jan12/ZmmTP/SingleMuonF.root'),
+    #'DataG': analysis.TTreeEvaluator('inclusive/ZmmTP', 'output/HTT2016Studies_Jan12/ZmmTP/SingleMuonG.root'),
+    #'DataH': analysis.TTreeEvaluator('inclusive/ZmmTP', 'output/HTT2016Studies_Jan12/ZmmTP/SingleMuonH.root')
 }
 
 
 # sys.exit(0)
 
 for sample in trees:
-    outfile = ROOT.TFile('ZmmTP_%s.root' % sample, 'RECREATE')
+    outfile = ROOT.TFile('ICHEP_Datasets/ZmmTP_%s.root' % sample, 'RECREATE')
     hists = trees[sample].Draw(drawlist, compiled=True)
 
     i = 0

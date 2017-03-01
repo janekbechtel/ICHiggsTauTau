@@ -38,9 +38,12 @@ hists = []
 # Process each input argument
 for src in args.input:
     splitsrc = src.split(':')
-    file = ROOT.TFile(splitsrc[0])
+    file = ROOT.TFile(splitsrc[0].replace("DataMC", "Data"))
     hists.append(file.Get(splitsrc[1]).Clone())
     file.Close()
+    file2 = ROOT.TFile(splitsrc[0].replace("DataMC", "DYJetsToLL"))
+    hists[-1].Divide(file2.Get(splitsrc[1]).Clone())
+    file2.Close()
 
 print hists
 
@@ -54,7 +57,7 @@ for i in xrange(1, hist.GetNbinsY()+1):
     canv = ROOT.TCanvas('%s_%i' % (args.output, i), args.output)
 
     if args.ratio_to is not None:
-        pads = plot.TwoPadSplit(0.50, 0.01, 0.01)
+        pads = plot.TwoPadSplit(0.60, 0.01, 0.01)
     else:
         pads = plot.OnePad()
     slices = []
@@ -92,7 +95,7 @@ for i in xrange(1, hist.GetNbinsY()+1):
     legend.Draw()
 
     plot.DrawCMSLogo(pads[0], 'CMS', 'Internal', 0, 0.16, 0.035, 1.2, cmsTextSize=0.9)
-    plot.DrawTitle(pads[0], '35.87 fb^{-1} (13 TeV)', 3)
+    plot.DrawTitle(pads[1], '12.9 fb^{-1} (13 TeV)', 3)
 
     if args.ratio_to is not None:
         pads[1].cd()

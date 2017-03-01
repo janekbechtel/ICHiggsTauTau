@@ -116,7 +116,7 @@ bin_cfgs = [
         'tag': 'trg_t_Ele25eta2p1WPTight && id_p && iso_p >= 0.10 && iso_p < 0.20',
         'probe': 'trg_p_Ele25eta2p1WPTight',
         'binvar_x': 'pt_p',
-        'bins_x': [10., 20., 22., 24., 26., 28., 30., 40., 50., 100. 1000.],
+        'bins_x': [10., 20., 22., 24., 26., 28., 30., 40., 50., 100., 1000.],
         'binvar_y': 'abs(sc_eta_p)',
         'bins_y': [0, 2.5]
     },
@@ -139,7 +139,7 @@ bin_cfgs = [
         'bins_x': [10., 20., 22., 24., 26., 28., 30., 40., 50., 100., 1000.],
         'binvar_y': 'abs(sc_eta_p)',
         'bins_y': [0, 2.5]
-    },
+    }
     # {
     #     'name': 'Trg_AIso2_pt_eta_bins',
     #     'var': 'm_ll(50,75,125)',
@@ -186,15 +186,15 @@ for cfg in bin_cfgs:
 
 
 trees = {
-    'DYJetsToLL': analysis.TTreeEvaluator('ZeeTP', 'output/HTT2016Studies_July19/DYJetsToLL.root'),
-    'Data': analysis.TTreeEvaluator('ZeeTP', 'output/HTT2016Studies_July19/SingleElectron.root')
+    'DYJetsToLL': analysis.TTreeEvaluator('inclusive/ZeeTP', 'output/HTT2016Studies_Jan15/ZeeTP/DYJetsToLLM50.root'),
+    'Data': analysis.TTreeEvaluator('inclusive/ZeeTP', 'output/HTT2016Studies_Jan15/ZeeTP/SingleElectron.root')
 }
 
 
 # sys.exit(0)
 
 for sample in trees:
-    outfile = ROOT.TFile('ZeeTP_%s.root' % sample, 'RECREATE')
+    outfile = ROOT.TFile('ICHEP_Datasets/ZeeTP_%s.root' % sample, 'RECREATE')
     hists = trees[sample].Draw(drawlist, compiled=True)
 
     i = 0
