@@ -490,7 +490,7 @@ for cfg in bin_cfgs:
 
 trees = {
     'DYJetsToLL': analysis.TTreeEvaluator('inclusive/GenMuon', 'output/HTT2016Studies_Truth1/GenMuon/DYJetsToLLM50.root'),
-    'EmbeddingMC': analysis.TTreeEvaluator('inclusive/GenMuon', 'output/HTT2016Studies_Truth1/GenMuon/EmbeddingMC.root'),
+    #'EmbeddingMC': analysis.TTreeEvaluator('inclusive/GenMuon', 'output/HTT2016Studies_Truth1/GenMuon/EmbeddingMC.root'),
     'EmbeddingData': analysis.TTreeEvaluator('inclusive/GenMuon', 'output/HTT2016Studies_Truth1/GenMuon/EmbeddingData.root')
 }
 

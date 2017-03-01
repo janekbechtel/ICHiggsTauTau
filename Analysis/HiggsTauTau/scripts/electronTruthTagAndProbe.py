@@ -518,7 +518,7 @@ for cfg in bin_cfgs:
 
 trees = {
     'DYJetsToLL': analysis.TTreeEvaluator('inclusive/GenElectron', 'output/HTT2016Studies_Truth1/GenElectron/DYJetsToLLM50.root'),
-    'EmbeddingMC': analysis.TTreeEvaluator('inclusive/GenElectron', 'output/HTT2016Studies_Truth1/GenElectron/EmbeddingMC.root'),
+    #'EmbeddingMC': analysis.TTreeEvaluator('inclusive/GenElectron', 'output/HTT2016Studies_Truth1/GenElectron/EmbeddingMC.root'),
     'EmbeddingData': analysis.TTreeEvaluator('inclusive/GenElectron', 'output/HTT2016Studies_Truth1/GenElectron/EmbeddingData.root')
 }
 
