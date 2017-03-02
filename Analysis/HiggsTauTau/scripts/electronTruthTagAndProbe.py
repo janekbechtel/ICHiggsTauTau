@@ -13,7 +13,7 @@ bin_cfgs = [
     {
         'name': 'ID_pt_bins_inc_eta',
         'var': 'pt_p(99,10,1000)',
-        'tag': 'gen_p && wt < 1.0',
+        'tag': 'gen_p && 0.95 < pt_gen/pt_p && pt_gen/pt_p < 1.05 && wt < 1.0',
         'probe': 'id_p',
         'binvar_x': 'pt_p',
         'bins_x': [10., 20., 25., 30., 40., 50., 100., 200., 1000.],
@@ -23,7 +23,7 @@ bin_cfgs = [
     {
         'name': 'ID_pt_eta_bins',
         'var': 'pt_p(99,10,1000)',
-        'tag': 'gen_p && wt < 1.0',
+        'tag': 'gen_p && 0.95 < pt_gen/pt_p && pt_gen/pt_p < 1.05 && wt < 1.0',
         'probe': 'id_p',
         'binvar_x': 'pt_p',
         'bins_x': [10., 20., 25., 30., 40., 50., 100., 200., 1000.],
@@ -33,7 +33,7 @@ bin_cfgs = [
     {
         'name': 'Iso_pt_bins_inc_eta',
         'var': 'pt_p(99,10,1000)',
-        'tag': 'gen_p && wt < 1.0 && id_p',
+        'tag': 'gen_p && 0.95 < pt_gen/pt_p && pt_gen/pt_p < 1.05 && wt < 1.0 && id_p',
         'probe': 'iso_p < 0.10',
         'binvar_x': 'pt_p',
         'bins_x': [10., 20., 25., 30., 40., 50., 100., 200., 1000.],
@@ -43,7 +43,7 @@ bin_cfgs = [
     {
         'name': 'Iso_pt_eta_bins',
         'var': 'pt_p(99,10,1000)',
-        'tag': 'gen_p && wt < 1.0 && id_p',
+        'tag': 'gen_p && 0.95 < pt_gen/pt_p && pt_gen/pt_p < 1.05 && wt < 1.0 && id_p',
         'probe': 'iso_p < 0.10',
         'binvar_x': 'pt_p',
         'bins_x': [10., 20., 25., 30., 40., 50., 100., 200., 1000.],
@@ -53,7 +53,7 @@ bin_cfgs = [
     #{
     #    'name': 'AIso1_pt_bins_inc_eta',
     #    'var': 'pt_p(99,10,1000)',
-    #    'tag': 'gen_p && wt < 1.0 && id_p',
+    #    'tag': 'gen_p && 0.95 < pt_gen/pt_p && pt_gen/pt_p < 1.05 && wt < 1.0 && id_p',
     #    'probe': 'iso_p >= 0.10 && iso_p < 0.20',
     #    'binvar_x': 'pt_p',
     #    'bins_x': [10., 20., 25., 30., 40., 50., 100., 1000.],
@@ -63,7 +63,7 @@ bin_cfgs = [
     {
         'name': 'AIso1_pt_eta_bins',
         'var': 'pt_p(99,10,1000)',
-        'tag': 'gen_p && wt < 1.0 && id_p',
+        'tag': 'gen_p && 0.95 < pt_gen/pt_p && pt_gen/pt_p < 1.05 && wt < 1.0 && id_p',
         'probe': 'iso_p >= 0.10 && iso_p < 0.20',
         'binvar_x': 'pt_p',
         'bins_x': [10., 20., 25., 30., 40., 50., 100., 1000.],
@@ -73,7 +73,7 @@ bin_cfgs = [
     #{
     #    'name': 'AIso2_pt_bins_inc_eta',
     #    'var': 'pt_p(99,10,1000)',
-    #    'tag': 'gen_p && wt < 1.0 && id_p',
+    #    'tag': 'gen_p && 0.95 < pt_gen/pt_p && pt_gen/pt_p < 1.05 && wt < 1.0 && id_p',
     #    'probe': 'iso_p >= 0.20 && iso_p < 0.50',
     #    'binvar_x': 'pt_p',
     #    'bins_x': [10., 20., 25., 30., 40., 50., 100., 1000.],
@@ -83,7 +83,7 @@ bin_cfgs = [
     {
         'name': 'AIso2_pt_eta_bins',
         'var': 'pt_p(99,10,1000)',
-        'tag': 'gen_p && wt < 1.0 && id_p',
+        'tag': 'gen_p && 0.95 < pt_gen/pt_p && pt_gen/pt_p < 1.05 && wt < 1.0 && id_p',
         'probe': 'iso_p >= 0.20 && iso_p < 0.50',
         'binvar_x': 'pt_p',
         'bins_x': [10., 20., 25., 30., 40., 50., 100., 1000.],
@@ -93,7 +93,7 @@ bin_cfgs = [
     #{
     #    'name': 'Trg_Iso_pt_bins_inc_eta',
     #    'var': 'pt_p(99,10,1000)',
-    #    'tag': 'gen_p && wt < 1.0 && id_p && iso_p < 0.10',
+    #    'tag': 'gen_p && 0.95 < pt_gen/pt_p && pt_gen/pt_p < 1.05 && wt < 1.0 && id_p && iso_p < 0.10',
     #    'probe': 'trg_p_Ele25eta2p1WPTight',
     #    'binvar_x': 'pt_p',
     #    'bins_x': [10., 20., 22., 24., 26., 28., 30., 40., 50., 100., 200., 1000.],
@@ -105,7 +105,7 @@ bin_cfgs = [
     {
         'name': 'Trg_Iso_pt_eta_bins',
         'var': 'pt_p(99,10,1000)',
-        'tag': 'gen_p && wt < 1.0 && id_p && iso_p < 0.10',
+        'tag': 'gen_p && 0.95 < pt_gen/pt_p && pt_gen/pt_p < 1.05 && wt < 1.0 && id_p && iso_p < 0.10',
         'probe': 'trg_p_Ele25eta2p1WPTight',
         'binvar_x': 'pt_p',
         'bins_x': [10., 20., 22., 24., 26., 28., 30., 40., 50., 100., 200., 1000.],
@@ -115,7 +115,7 @@ bin_cfgs = [
     {
         'name': 'Trg_AIso1_pt_bins_inc_eta',
         'var': 'pt_p(99,10,1000)',
-        'tag': 'gen_p && wt < 1.0 && id_p && iso_p >= 0.10 && iso_p < 0.20',
+        'tag': 'gen_p && 0.95 < pt_gen/pt_p && pt_gen/pt_p < 1.05 && wt < 1.0 && id_p && iso_p >= 0.10 && iso_p < 0.20',
         'probe': 'trg_p_Ele25eta2p1WPTight',
         'binvar_x': 'pt_p',
         'bins_x': [10., 20., 22., 24., 26., 28., 30., 40., 50., 100., 1000.],
@@ -125,7 +125,7 @@ bin_cfgs = [
     {
         'name': 'Trg_AIso1_pt_eta_bins',
         'var': 'pt_p(99,10,1000)',
-        'tag': 'gen_p && wt < 1.0 && id_p && iso_p >= 0.10 && iso_p < 0.20',
+        'tag': 'gen_p && 0.95 < pt_gen/pt_p && pt_gen/pt_p < 1.05 && wt < 1.0 && id_p && iso_p >= 0.10 && iso_p < 0.20',
         'probe': 'trg_p_Ele25eta2p1WPTight',
         'binvar_x': 'pt_p',
         'bins_x': [10., 20., 22., 24., 26., 28., 30., 40., 50., 100., 1000.],
@@ -135,7 +135,7 @@ bin_cfgs = [
     {
         'name': 'Trg_AIso2_pt_bins_inc_eta',
         'var': 'pt_p(99,10,1000)',
-        'tag': 'gen_p && wt < 1.0 && id_p && iso_p >= 0.20 && iso_p < 0.50',
+        'tag': 'gen_p && 0.95 < pt_gen/pt_p && pt_gen/pt_p < 1.05 && wt < 1.0 && id_p && iso_p >= 0.20 && iso_p < 0.50',
         'probe': 'trg_p_Ele25eta2p1WPTight',
         'binvar_x': 'pt_p',
         'bins_x': [10., 20., 22., 24., 26., 28., 30., 40., 50., 100., 1000.],
@@ -145,7 +145,7 @@ bin_cfgs = [
     {
         'name': 'Trg_AIso2_pt_eta_bins',
         'var': 'pt_p(99,10,1000)',
-        'tag': 'gen_p && wt < 1.0 && id_p && iso_p >= 0.20 && iso_p < 0.50',
+        'tag': 'gen_p && 0.95 < pt_gen/pt_p && pt_gen/pt_p < 1.05 && wt < 1.0 && id_p && iso_p >= 0.20 && iso_p < 0.50',
         'probe': 'trg_p_Ele25eta2p1WPTight',
         'binvar_x': 'pt_p',
         'bins_x': [10., 20., 22., 24., 26., 28., 30., 40., 50., 100., 1000.],
@@ -260,7 +260,7 @@ bin_cfgs = [
     {
         'name': 'TrgOR_Iso_pt_eta_bins',
         'var': 'pt_p(99,10,1000)',
-        'tag': 'gen_p && wt < 1.0 && id_p && iso_p < 0.10',
+        'tag': 'gen_p && 0.95 < pt_gen/pt_p && pt_gen/pt_p < 1.05 && wt < 1.0 && id_p && iso_p < 0.10',
         'probe': 'trg_p_Ele25eta2p1WPTight || trg_p_PFTau120',
         'binvar_x': 'pt_p',
         'bins_x': [10., 20., 22., 24., 26., 28., 30., 40., 50., 100., 200., 1000.],
@@ -270,7 +270,7 @@ bin_cfgs = [
     {
         'name': 'TrgOR_AIso1_pt_bins_inc_eta',
         'var': 'pt_p(99,10,1000)',
-        'tag': 'gen_p && wt < 1.0 && id_p && iso_p >= 0.10 && iso_p < 0.20',
+        'tag': 'gen_p && 0.95 < pt_gen/pt_p && pt_gen/pt_p < 1.05 && wt < 1.0 && id_p && iso_p >= 0.10 && iso_p < 0.20',
         'probe': 'trg_p_Ele25eta2p1WPTight || trg_p_PFTau120',
         'binvar_x': 'pt_p',
         'bins_x': [10., 20., 22., 24., 26., 28., 30., 40., 50., 100., 1000.],
@@ -280,7 +280,7 @@ bin_cfgs = [
     {
         'name': 'TrgOR_AIso1_pt_eta_bins',
         'var': 'pt_p(99,10,1000)',
-        'tag': 'gen_p && wt < 1.0 && id_p && iso_p >= 0.10 && iso_p < 0.20',
+        'tag': 'gen_p && 0.95 < pt_gen/pt_p && pt_gen/pt_p < 1.05 && wt < 1.0 && id_p && iso_p >= 0.10 && iso_p < 0.20',
         'probe': 'trg_p_Ele25eta2p1WPTight || trg_p_PFTau120',
         'binvar_x': 'pt_p',
         'bins_x': [10., 20., 22., 24., 26., 28., 30., 40., 50., 100., 1000.],
@@ -290,7 +290,7 @@ bin_cfgs = [
     {
         'name': 'TrgOR_AIso2_pt_bins_inc_eta',
         'var': 'pt_p(99,10,1000)',
-        'tag': 'gen_p && wt < 1.0 && id_p && iso_p >= 0.20 && iso_p < 0.50',
+        'tag': 'gen_p && 0.95 < pt_gen/pt_p && pt_gen/pt_p < 1.05 && wt < 1.0 && id_p && iso_p >= 0.20 && iso_p < 0.50',
         'probe': 'trg_p_Ele25eta2p1WPTight || trg_p_PFTau120',
         'binvar_x': 'pt_p',
         'bins_x': [10., 20., 22., 24., 26., 28., 30., 40., 50., 100., 1000.],
@@ -300,7 +300,7 @@ bin_cfgs = [
     {
         'name': 'TrgOR_AIso2_pt_eta_bins',
         'var': 'pt_p(99,10,1000)',
-        'tag': 'gen_p && wt < 1.0 && id_p && iso_p >= 0.20 && iso_p < 0.50',
+        'tag': 'gen_p && 0.95 < pt_gen/pt_p && pt_gen/pt_p < 1.05 && wt < 1.0 && id_p && iso_p >= 0.20 && iso_p < 0.50',
         'probe': 'trg_p_Ele25eta2p1WPTight || trg_p_PFTau120',
         'binvar_x': 'pt_p',
         'bins_x': [10., 20., 22., 24., 26., 28., 30., 40., 50., 100., 1000.],
@@ -414,7 +414,7 @@ bin_cfgs = [
     {
         'name': 'DESYtag_ID_pt_eta_bins',
         'var': 'pt_p(99,10,1000)',
-        'tag': 'gen_p && wt < 1.0',
+        'tag': 'gen_p && 0.95 < pt_gen/pt_p && pt_gen/pt_p < 1.05 && wt < 1.0',
         'probe': 'id_p',
         'binvar_x': 'pt_p',
         'bins_x': [10., 20., 25., 30., 40., 50., 100., 200., 1000.],
@@ -424,7 +424,7 @@ bin_cfgs = [
     {
         'name': 'DESYtag_Iso_pt_eta_bins',
         'var': 'pt_p(99,10,1000)',
-        'tag': 'gen_p && wt < 1.0 && id_p',
+        'tag': 'gen_p && 0.95 < pt_gen/pt_p && pt_gen/pt_p < 1.05 && wt < 1.0 && id_p',
         'probe': 'iso_p < 0.10',
         'binvar_x': 'pt_p',
         'bins_x': [10., 20., 25., 30., 40., 50., 100., 200., 1000.],
@@ -434,7 +434,7 @@ bin_cfgs = [
     {
         'name': 'DESYtag_Trg_Iso_pt_eta_bins',
         'var': 'pt_p(99,10,1000)',
-        'tag': 'gen_p && wt < 1.0 && id_p && iso_p < 0.10',
+        'tag': 'gen_p && 0.95 < pt_gen/pt_p && pt_gen/pt_p < 1.05 && wt < 1.0 && id_p && iso_p < 0.10',
         'probe': 'trg_p_Ele25eta2p1WPTight',
         'binvar_x': 'pt_p',
         'bins_x': [10., 20., 22., 24., 26., 28., 30., 40., 50., 100., 200., 1000.],
@@ -444,7 +444,7 @@ bin_cfgs = [
     {
         'name': 'DESYtagNonSC_ID_pt_eta_bins',
         'var': 'pt_p(99,10,1000)',
-        'tag': 'gen_p && wt < 1.0',
+        'tag': 'gen_p && 0.95 < pt_gen/pt_p && pt_gen/pt_p < 1.05 && wt < 1.0',
         'probe': 'id_p',
         'binvar_x': 'pt_p',
         'bins_x': [10., 20., 25., 30., 40., 50., 100., 200., 1000.],
@@ -454,7 +454,7 @@ bin_cfgs = [
     {
         'name': 'DESYtagNonSC_Iso_pt_eta_bins',
         'var': 'pt_p(99,10,1000)',
-        'tag': 'gen_p && wt < 1.0 && id_p',
+        'tag': 'gen_p && 0.95 < pt_gen/pt_p && pt_gen/pt_p < 1.05 && wt < 1.0 && id_p',
         'probe': 'iso_p < 0.10',
         'binvar_x': 'pt_p',
         'bins_x': [10., 20., 25., 30., 40., 50., 100., 200., 1000.],
@@ -464,7 +464,7 @@ bin_cfgs = [
     {
         'name': 'DESYtagNonSC_IDIso_pt_eta_bins',
         'var': 'pt_p(99,10,1000)',
-        'tag': 'gen_p && wt < 1.0',
+        'tag': 'gen_p && 0.95 < pt_gen/pt_p && pt_gen/pt_p < 1.05 && wt < 1.0',
         'probe': 'id_p && iso_p < 0.10',
         'binvar_x': 'pt_p',
         'bins_x': [10., 20., 25., 30., 40., 50., 100., 200., 1000.],
@@ -474,7 +474,7 @@ bin_cfgs = [
     {
         'name': 'DESYtagNonSC_Trg_Iso_pt_eta_bins',
         'var': 'pt_p(99,10,1000)',
-        'tag': 'gen_p && wt < 1.0 && id_p && iso_p < 0.10',
+        'tag': 'gen_p && 0.95 < pt_gen/pt_p && pt_gen/pt_p < 1.05 && wt < 1.0 && id_p && iso_p < 0.10',
         'probe': 'trg_p_Ele25eta2p1WPTight',
         'binvar_x': 'pt_p',
         'bins_x': [10., 20., 22., 24., 26., 28., 30., 40., 50., 100., 200., 1000.],
