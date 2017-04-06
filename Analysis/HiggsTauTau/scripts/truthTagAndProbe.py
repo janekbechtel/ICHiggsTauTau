@@ -107,6 +107,10 @@ for arg in model_args:
     wsp.factory(arg)
 
 hist = infile.Get(name)
+hist_pass=hist.Clone()
+hist_pass.SetName(hist.GetName()+"_pass")
+hist_tot=hist.Clone()
+hist_tot.SetName(hist.GetName()+"_tot")
 bin_cfg = {
     'name': hist.GetName(),
     'binvar_x': hist.GetXaxis().GetTitle(),
@@ -145,13 +149,36 @@ for b in bins:
     yield_pass = wsp.data(dat).sumEntries("cat==cat::pass")
     wsp.var("numTot").setVal(yield_tot)
     
+    
+    
+    
+    #yields=0.0
+    yield_tot_err=0.0
+    #print wsp.data(dat).numEntries()
+    for i in range(wsp.data(dat).numEntries()):
+        wsp.data(dat).get(i)
+        #yields+=wsp.data(dat).weight()
+        #print wsp.data(dat).weight()
+        #print wsp.data(dat).weightSquared() #same as below
+        yield_tot_err+=wsp.data(dat).weightError(1)*wsp.data(dat).weightError(1) #enum ErrorType 1=SumW2
+    yield_tot_err=yield_tot_err**0.5
+    #print yields
+    #print yield_tot
+    #print yield_tot_err
+    
+    splitData = wsp.data(dat).split(wsp.cat('cat'))
+    yield_pass_err=0.0
+    #print splitData.At(1).numEntries()
+    for i in range(splitData.At(1).numEntries()):
+        splitData.At(1).get(i)
+        yield_pass_err+=splitData.At(1).weightError(1)*splitData.At(1).weightError(1)
+    yield_pass_err=yield_pass_err**0.5   
     err = 0.0
     if yield_tot > 0:
         wsp.var("efficiency").setVal(yield_pass/yield_tot)
-        err = yield_pass**0.5/yield_tot+yield_pass/yield_tot**1.5
+        err = ((yield_pass_err/yield_tot)**2+(yield_tot_err/yield_tot*yield_pass/yield_tot)**2)**0.5
     else:
         wsp.var("efficiency").setVal(1.5)
-        
 
     # wsp.pdf("model").fitTo(wsp.data(dat),
     #                        ROOT.RooFit.Minimizer("Minuit2", "Scan"),
@@ -177,8 +204,17 @@ for b in bins:
     '''
     res.append((dat, wsp.var('efficiency').getVal(), err))
 
-    hist.SetBinContent(b[0], b[1], wsp.var('efficiency').getVal())
-    hist.SetBinError(b[0], b[1], err)
+    
+    #hist.SetBinContent(b[0], b[1], wsp.var('efficiency').getVal())
+    #hist.SetBinError(b[0], b[1], err)
+    hist_pass.SetBinContent(b[0], b[1], yield_pass)
+    hist_pass.SetBinError(b[0], b[1], yield_pass_err)
+    hist_tot.SetBinContent(b[0], b[1], yield_tot)
+    hist_tot.SetBinError(b[0], b[1], yield_tot_err)
+    result=0.0
+    if yield_tot>0.0:
+        result=yield_pass/yield_tot
+    print "%i, %i: %f/%f=%f"%(b[0],b[1],yield_pass,yield_tot,result)
 
     canv = ROOT.TCanvas('%s' % (label), "%s" % (label))
     pad_left = ROOT.TPad('left', '', 0., 0., 0.5, 1.)
@@ -192,7 +228,7 @@ for b in bins:
 
     ROOT.TGaxis.SetExponentOffset(-0.08, -0.02)
 
-    splitData = wsp.data(dat).split(wsp.cat('cat'))
+    
     xframe = wsp.var("pt_p").frame(ROOT.RooFit.Title("Passing"))
     width = (wsp.var("pt_p").getMax() - wsp.var("pt_p").getMin()) / splitData.At(1).numEntries()
     splitData.At(1).plotOn(xframe, ROOT.RooFit.Name("DataPass"))
@@ -278,7 +314,7 @@ for b in bins:
 
     canv.Print('%s/%s.png' % (args.plot_dir, canv.GetName()))
     canv.Print('%s/%s.pdf' % (args.plot_dir, canv.GetName()))
-
+'''
 if args.bin_replace is not None:
     replacements = args.bin_replace.split(':')
     for rep in replacements:
@@ -292,15 +328,20 @@ if args.bin_replace is not None:
         print 'Replacing content of bin %g,%g (%g +/- %g) with %g,%g (%g +/- %g)' % (dest_bin_x, dest_bin_y, dest_val, dest_err, src_bin_x, src_bin_y, src_val, src_err)
         hist.SetBinContent(dest_bin_x, dest_bin_y, src_val)
         hist.SetBinError(dest_bin_x, dest_bin_y, src_err)
-
+'''
 outfile = ROOT.TFile(filename.replace('.root', '_Fits_%s%s.root' % (name, args.postfix)), 'RECREATE')
-hist.Write()
+#hist.Write()
+hist_pass.Write()
+hist_tot.Write()
 
 for i in xrange(1, hist.GetNbinsY()+1):
-    slice = hist.ProjectionX('%s_projx_%i' % (hist.GetName(), i), i, i)
-    slice.Write()
-    gr = ROOT.TGraphAsymmErrors(slice)
-    gr.SetName('gr_'+slice.GetName())
+    slice_pass = hist_pass.ProjectionX('%s_projx_%i_pass' % (hist.GetName(), i), i, i)
+    slice_tot = hist_tot.ProjectionX('%s_projx_%i_tot' % (hist.GetName(), i), i, i)
+    slice_pass.Write()
+    slice_tot.Write()
+    gr = ROOT.TGraphAsymmErrors(slice_tot)
+    gr.Divide(slice_pass, slice_tot, "b(5,1)")
+    gr.SetName('gr_%s_projx_%i' % (hist.GetName(), i))
     gr.Write()
 
 outfile.Close()
