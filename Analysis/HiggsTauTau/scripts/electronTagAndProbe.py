@@ -186,15 +186,17 @@ for cfg in bin_cfgs:
 
 
 trees = {
-    'DYJetsToLL': analysis.TTreeEvaluator('inclusive/ZeeTP', 'output/HTT2016Studies_Jan15/ZeeTP/DYJetsToLLM50.root'),
-    'Data': analysis.TTreeEvaluator('inclusive/ZeeTP', 'output/HTT2016Studies_Jan15/ZeeTP/SingleElectron.root')
-}
+    #~ 'DYJetsToLL': analysis.TTreeEvaluator('inclusive/ZeeTP', 'output/HTT2016Studies_Jan15/ZeeTP/DYJetsToLLM50.root'),
+    'Data': analysis.TTreeEvaluator('inclusive/ZeeTP', 'tp_files/SingleElectron.root')
+    'Embedding':  analysis.TTreeEvaluator('inclusive/ZeeTP', 'tp_files/EmbeddingEE.root')
+
+}	
 
 
 # sys.exit(0)
 
 for sample in trees:
-    outfile = ROOT.TFile('ICHEP_Datasets/ZeeTP_%s.root' % sample, 'RECREATE')
+    outfile = ROOT.TFile('output/ZeeTP_%s.root' % sample, 'RECREATE')
     hists = trees[sample].Draw(drawlist, compiled=True)
 
     i = 0

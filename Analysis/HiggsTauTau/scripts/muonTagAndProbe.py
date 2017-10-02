@@ -346,22 +346,17 @@ for cfg in bin_cfgs:
 
 
 trees = {
-    'DYJetsToLL': analysis.TTreeEvaluator('inclusive/ZmmTP', 'output/HTT2016Studies_Jan11/ZmmTP/DYJetsToLLM50.root'),
-    'Data': analysis.TTreeEvaluator('inclusive/ZmmTP', 'output/HTT2016Studies_Jan11/ZmmTP/SingleMuon.root') #,
-    #'DataB': analysis.TTreeEvaluator('inclusive/ZmmTP', 'output/HTT2016Studies_Jan12/ZmmTP/SingleMuonB.root'),
-    #'DataC': analysis.TTreeEvaluator('inclusive/ZmmTP', 'output/HTT2016Studies_Jan12/ZmmTP/SingleMuonC.root'),
-    #'DataD': analysis.TTreeEvaluator('inclusive/ZmmTP', 'output/HTT2016Studies_Jan12/ZmmTP/SingleMuonD.root'),
-    #'DataE': analysis.TTreeEvaluator('inclusive/ZmmTP', 'output/HTT2016Studies_Jan12/ZmmTP/SingleMuonE.root'),
-    #'DataF': analysis.TTreeEvaluator('inclusive/ZmmTP', 'output/HTT2016Studies_Jan12/ZmmTP/SingleMuonF.root'),
-    #'DataG': analysis.TTreeEvaluator('inclusive/ZmmTP', 'output/HTT2016Studies_Jan12/ZmmTP/SingleMuonG.root'),
-    #'DataH': analysis.TTreeEvaluator('inclusive/ZmmTP', 'output/HTT2016Studies_Jan12/ZmmTP/SingleMuonH.root')
+    #~ 'EmbeddingData': analysis.TTreeEvaluator('inclusive/ZmmTP', 'output/HTT2016Studies_Truth1/GenMuon/EmbeddingData.root') #,
+    'Embedding': analysis.TTreeEvaluator('inclusive/ZmmTP', 'tp_files/EmbeddingMuMu.root'),
+    'Data': analysis.TTreeEvaluator('inclusive/ZmmTP', 'tp_files/DoubleMuon.root'),
+    'MC': analysis.TTreeEvaluator('inclusive/ZmmTP', 'tp_files/DYToLL.root')
 }
 
 
 # sys.exit(0)
-
+print trees
 for sample in trees:
-    outfile = ROOT.TFile('ICHEP_Datasets/ZmmTP_%s.root' % sample, 'RECREATE')
+    outfile = ROOT.TFile('output/ZmmTP_%s.root' % sample, 'RECREATE')
     hists = trees[sample].Draw(drawlist, compiled=True)
 
     i = 0
