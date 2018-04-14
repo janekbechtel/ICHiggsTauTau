@@ -2,14 +2,18 @@ import ROOT
 import glob
 import sys
 # import json
+import argparse
 from array import array
 import UserCode.ICHiggsTauTau.analysis as analysis
 
 ROOT.RooWorkspace.imp = getattr(ROOT.RooWorkspace, 'import')
 ROOT.TH1.AddDirectory(0)
 
+parser = argparse.ArgumentParser()
+parser.add_argument('--era', default='2016')
+args = parser.parse_args()
 
-bin_cfgs = [
+bin_cfgs_2016 = [
     {
         'name': 'ID_pt_bins_inc_eta',
         'var': 'm_ll(50,75,125)',
@@ -136,7 +140,7 @@ bin_cfgs = [
         'tag': 'muon_p && trg_t_IsoMu22 && id_p && iso_p < 0.15',
         'probe': 'trg_p_IsoMu22',
         'binvar_x': 'pt_p',
-        'bins_x': [20., 21., 22., 23., 24., 25., 30., 40., 50., 60., 80., 100., 200., 1000.],
+        'bins_x': [10., 20., 22., 23., 24., 25., 30., 40., 50., 60., 80., 100., 200., 1000.],
         'binvar_y': 'eta_p',
         'bins_y': [-2.4, 2.4]
     },
@@ -192,6 +196,196 @@ bin_cfgs = [
     }
 ]
 
+bin_cfgs_2017 = [
+    {
+        'name': 'ID_pt_bins_inc_eta',
+        'var': 'm_ll(50,75,125)',
+        'tag': 'muon_p && trg_t_IsoMu27',
+        'probe': 'id_p',
+        'binvar_x': 'pt_p',
+        'bins_x': [10., 15., 20., 25., 30., 40., 50., 60., 80., 100., 200., 1000.],
+        'binvar_y': 'eta_p',
+        'bins_y': [-2.4, 2.4]
+    },
+    {
+        'name': 'ID_pt_eta_bins',
+        'var': 'm_ll(50,75,125)',
+        'tag': 'muon_p && trg_t_IsoMu27',
+        'probe': 'id_p',
+        'binvar_x': 'pt_p',
+        'bins_x': [10., 15., 20., 25., 30., 40., 50., 60., 80., 100., 200., 1000.],
+        'binvar_y': 'abs(eta_p)',
+        'bins_y': [0, 0.9, 1.2, 2.1, 2.4]
+    },
+    {
+        'name': 'IDTrk_pt_bins_inc_eta',
+        'var': 'm_ll(50,75,125)',
+        'tag': 'trk_p && trg_t_IsoMu27',
+        'probe': 'id_p',
+        'binvar_x': 'pt_p',
+        'bins_x': [10., 15., 20., 25., 30., 40., 50., 60., 80., 100., 200., 1000.],
+        'binvar_y': 'eta_p',
+        'bins_y': [-2.4, 2.4]
+    },
+    {
+        'name': 'IDTrk_pt_eta_bins',
+        'var': 'm_ll(50,75,125)',
+        'tag': 'trk_p && trg_t_IsoMu27',
+        'probe': 'id_p',
+        'binvar_x': 'pt_p',
+        'bins_x': [10., 15., 20., 25., 30., 40., 50., 60., 80., 100., 200., 1000.],
+        'binvar_y': 'abs(eta_p)',
+        'bins_y': [0, 0.9, 1.2, 2.1, 2.4]
+    },
+    {
+        'name': 'Iso_pt_bins_inc_eta',
+        'var': 'm_ll(50,75,125)',
+        'tag': 'muon_p && trg_t_IsoMu27 && id_p',
+        'probe': 'iso_p < 0.15',
+        'binvar_x': 'pt_p',
+        'bins_x': [10., 15., 20., 25., 30., 40., 50., 60., 80., 100., 200., 1000.],
+        'binvar_y': 'eta_p',
+        'bins_y': [-2.4, 2.4]
+    },
+    {
+        'name': 'LooseIso_pt_bins_inc_eta',
+        'var': 'm_ll(50,75,125)',
+        'tag': 'muon_p && trg_t_IsoMu27 && id_p',
+        'probe': 'iso_p < 0.2',
+        'binvar_x': 'pt_p',
+        'bins_x': [10., 15., 20., 25., 30., 40., 50., 60., 80., 100., 200., 1000.],
+        'binvar_y': 'eta_p',
+        'bins_y': [-2.4, 2.4]
+    },
+    {
+        'name': 'Iso_pt_eta_bins',
+        'var': 'm_ll(50,75,125)',
+        'tag': 'muon_p && trg_t_IsoMu27 && id_p',
+        'probe': 'iso_p < 0.15',
+        'binvar_x': 'pt_p',
+        'bins_x': [10., 15., 20., 25., 30., 40., 50., 60., 80., 100., 200., 1000.],
+        'binvar_y': 'abs(eta_p)',
+        'bins_y': [0, 0.9, 1.2, 2.1, 2.4]
+    },
+    {
+        'name': 'LooseIso_pt_eta_bins',
+        'var': 'm_ll(50,75,125)',
+        'tag': 'muon_p && trg_t_IsoMu27 && id_p',
+        'probe': 'iso_p < 0.2',
+        'binvar_x': 'pt_p',
+        'bins_x': [10., 15., 20., 25., 30., 40., 50., 60., 80., 100., 200., 1000.],
+        'binvar_y': 'abs(eta_p)',
+        'bins_y': [0, 0.9, 1.2, 2.1, 2.4]
+    },
+    {
+        'name': 'AIso1_pt_bins_inc_eta',
+        'var': 'm_ll(50,75,125)',
+        'tag': 'muon_p && trg_t_IsoMu27 && id_p',
+        'probe': 'iso_p >= 0.15 && iso_p < 0.25',
+        'binvar_x': 'pt_p',
+        'bins_x': [10., 15., 20., 25., 30., 40., 50., 60., 80., 100., 1000.],
+        'binvar_y': 'eta_p',
+        'bins_y': [-2.4, 2.4]
+    },
+    {
+        'name': 'AIso1_pt_eta_bins',
+        'var': 'm_ll(50,75,125)',
+        'tag': 'muon_p && trg_t_IsoMu27 && id_p',
+        'probe': 'iso_p >= 0.15 && iso_p < 0.25',
+        'binvar_x': 'pt_p',
+        'bins_x': [10., 15., 20., 25., 30., 40., 50., 60., 80., 100., 1000.],
+        'binvar_y': 'abs(eta_p)',
+        'bins_y': [0, 0.9, 1.2, 2.1, 2.4]
+    },
+    {
+        'name': 'AIso2_pt_bins_inc_eta',
+        'var': 'm_ll(50,75,125)',
+        'tag': 'muon_p && trg_t_IsoMu27 && id_p',
+        'probe': 'iso_p >= 0.25 && iso_p < 0.50',
+        'binvar_x': 'pt_p',
+        'bins_x': [10., 15., 20., 25., 30., 40., 50., 60., 80., 100., 1000.],
+        'binvar_y': 'eta_p',
+        'bins_y': [-2.4, 2.4]
+    },
+    {
+        'name': 'AIso2_pt_eta_bins',
+        'var': 'm_ll(50,75,125)',
+        'tag': 'muon_p && trg_t_IsoMu27 && id_p',
+        'probe': 'iso_p >= 0.25 && iso_p < 0.50',
+        'binvar_x': 'pt_p',
+        'bins_x': [10., 15., 20., 25., 30., 40., 50., 60., 80., 100., 1000.],
+        'binvar_y': 'abs(eta_p)',
+        'bins_y': [0, 0.9, 1.2, 2.1, 2.4]
+    },
+    {
+        'name': 'Trg_Iso_pt_bins_inc_eta',
+        'var': 'm_ll(50,75,125)',
+        'tag': 'muon_p && trg_t_IsoMu27 && id_p && iso_p < 0.15',
+        'probe': 'trg_p_IsoMu27',
+        'binvar_x': 'pt_p',
+        'bins_x': [10., 20., 25., 26., 27., 28., 29., 30., 40., 50., 60., 80., 100., 200., 1000.],
+        'binvar_y': 'eta_p',
+        'bins_y': [-2.4, 2.4]
+    },
+    {
+        'name': 'Trg_Iso_pt_eta_bins',
+        'var': 'm_ll(50,75,125)',
+        'tag': 'muon_p && trg_t_IsoMu27 && id_p && iso_p < 0.15',
+        'probe': 'trg_p_IsoMu27',
+        'binvar_x': 'pt_p',
+        'bins_x': [20., 21., 22., 23., 24., 25., 30., 40., 50., 60., 80., 100., 200., 1000.],
+        'binvar_y': 'abs(eta_p)',
+        'bins_y': [0, 0.9, 1.2, 2.1, 2.4]
+    },
+    {
+        'name': 'Trg24_Iso_pt_bins_inc_eta',
+        'var': 'm_ll(50,75,125)',
+        'tag': 'muon_p && trg_t_IsoMu24 && id_p && iso_p < 0.15',
+        'probe': 'trg_p_IsoMu24',
+        'binvar_x': 'pt_p',
+        'bins_x': [20., 21., 22., 23., 24., 25., 30., 40., 50., 60., 80., 100., 200., 1000.],
+        'binvar_y': 'eta_p',
+        'bins_y': [-2.4, 2.4]
+    },
+    {
+        'name': 'Trg24_Iso_pt_eta_bins',
+        'var': 'm_ll(50,75,125)',
+        'tag': 'muon_p && trg_t_IsoMu24 && id_p && iso_p < 0.15',
+        'probe': 'trg_p_IsoMu24',
+        'binvar_x': 'pt_p',
+        'bins_x': [20., 21., 22., 23., 24., 25., 30., 40., 50., 60., 80., 100., 200., 1000.],
+        'binvar_y': 'abs(eta_p)',
+        'bins_y': [0, 0.9, 1.2, 2.1, 2.4]
+    },
+    {
+        'name': 'Trg_AIso1_pt_bins_inc_eta',
+        'var': 'm_ll(50,75,125)',
+        'tag': 'muon_p && trg_t_IsoMu27 && id_p && iso_p >= 0.15 && iso_p < 0.25',
+        'probe': 'trg_p_IsoMu27',
+        'binvar_x': 'pt_p',
+        'bins_x': [20., 21., 22., 23., 24., 25., 30., 40., 50., 60., 80., 100., 1000.],
+        'binvar_y': 'eta_p',
+        'bins_y': [-2.4, 2.4]
+    },
+    {
+        'name': 'Trg_AIso2_pt_bins_inc_eta',
+        'var': 'm_ll(50,75,125)',
+        'tag': 'muon_p && trg_t_IsoMu27 && id_p && iso_p >= 0.25 && iso_p < 0.50',
+        'probe': 'trg_p_IsoMu27',
+        'binvar_x': 'pt_p',
+        'bins_x': [20., 21., 22., 23., 24., 25., 30., 40., 50., 60., 80., 100., 1000.],
+        'binvar_y': 'eta_p',
+        'bins_y': [-2.4, 2.4]
+    }
+]
+
+if args.era=='2016': 
+	bin_cfgs=bin_cfgs_2016
+elif args.era=='2017':
+	bin_cfgs=bin_cfgs_2017
+else:
+	raise ValueError("Please select era: 2016 or 2017")
+	
 drawlist = []
 andable = set()
 
@@ -226,19 +420,16 @@ for cfg in bin_cfgs:
 
 
 trees = {
-    #~ 'EmbeddingData': analysis.TTreeEvaluator('inclusive/ZmmTP', 'output/HTT2016Studies_Truth1/GenMuon/EmbeddingData.root') #,
     'Embedding': analysis.TTreeEvaluator('mm_nominal/ZmmTP', 'tp_files/MuonEmbedding.root'),
     'Data': analysis.TTreeEvaluator('mm_nominal/ZmmTP', 'tp_files/DoubleMuon.root')
 }
-
-
-# sys.exit(0)
-print trees
+        
 for sample in trees:
     outfile = ROOT.TFile('output/ZmmTP_%s.root' % sample, 'RECREATE')
     hists = trees[sample].Draw(drawlist, compiled=True)
 
     i = 0
+
     for cfg in bin_cfgs:
         wsp = ROOT.RooWorkspace('wsp_'+cfg['name'], '')
         var = wsp.factory('m_ll[100,75,125]')
