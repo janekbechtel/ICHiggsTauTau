@@ -337,26 +337,26 @@ bin_cfgs_2017 = [
         'binvar_y': 'abs(eta_p)',
         'bins_y': [0, 0.9, 1.2, 2.1, 2.4]
     },
-    {
-        'name': 'Trg24_Iso_pt_bins_inc_eta',
-        'var': 'm_ll(50,75,125)',
-        'tag': 'muon_p && trg_t_IsoMu24 && id_p && iso_p < 0.15',
-        'probe': 'trg_p_IsoMu24',
-        'binvar_x': 'pt_p',
-        'bins_x': [20., 21., 22., 23., 24., 25., 30., 40., 50., 60., 80., 100., 200., 1000.],
-        'binvar_y': 'eta_p',
-        'bins_y': [-2.4, 2.4]
-    },
-    {
-        'name': 'Trg24_Iso_pt_eta_bins',
-        'var': 'm_ll(50,75,125)',
-        'tag': 'muon_p && trg_t_IsoMu24 && id_p && iso_p < 0.15',
-        'probe': 'trg_p_IsoMu24',
-        'binvar_x': 'pt_p',
-        'bins_x': [20., 21., 22., 23., 24., 25., 30., 40., 50., 60., 80., 100., 200., 1000.],
-        'binvar_y': 'abs(eta_p)',
-        'bins_y': [0, 0.9, 1.2, 2.1, 2.4]
-    },
+    # {
+    #     'name': 'Trg24_Iso_pt_bins_inc_eta',
+    #     'var': 'm_ll(50,75,125)',
+    #     'tag': 'muon_p && trg_t_IsoMu24 && id_p && iso_p < 0.15',
+    #     'probe': 'trg_p_IsoMu24',
+    #     'binvar_x': 'pt_p',
+    #     'bins_x': [20., 21., 22., 23., 24., 25., 30., 40., 50., 60., 80., 100., 200., 1000.],
+    #     'binvar_y': 'eta_p',
+    #     'bins_y': [-2.4, 2.4]
+    # },
+    # {
+    #     'name': 'Trg24_Iso_pt_eta_bins',
+    #     'var': 'm_ll(50,75,125)',
+    #     'tag': 'muon_p && trg_t_IsoMu24 && id_p && iso_p < 0.15',
+    #     'probe': 'trg_p_IsoMu24',
+    #     'binvar_x': 'pt_p',
+    #     'bins_x': [20., 21., 22., 23., 24., 25., 30., 40., 50., 60., 80., 100., 200., 1000.],
+    #     'binvar_y': 'abs(eta_p)',
+    #     'bins_y': [0, 0.9, 1.2, 2.1, 2.4]
+    # },
     {
         'name': 'Trg_AIso1_pt_bins_inc_eta',
         'var': 'm_ll(50,75,125)',
@@ -420,8 +420,8 @@ for cfg in bin_cfgs:
 
 
 trees = {
-    'Embedding': analysis.TTreeEvaluator('mm_nominal/ZmmTP', 'tp_files/MuonEmbedding.root'),
-    'Data': analysis.TTreeEvaluator('mm_nominal/ZmmTP', 'tp_files/DoubleMuon.root')
+  #  'Embedding': analysis.TTreeEvaluator('mm_nominal/ZmmTP', 'tp_files/MuonEmbedding2017.root'),
+    'Data': analysis.TTreeEvaluator('mm_nominal/ZmmTP', 'tp_files/DoubleMuon2017.root')
 }
         
 for sample in trees:
