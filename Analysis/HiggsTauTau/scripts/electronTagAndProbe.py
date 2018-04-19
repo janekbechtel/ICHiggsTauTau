@@ -2,21 +2,25 @@ import ROOT
 import glob
 import sys
 # import json
+import argparse
 from array import array
 import UserCode.ICHiggsTauTau.analysis as analysis
 
 ROOT.RooWorkspace.imp = getattr(ROOT.RooWorkspace, 'import')
 ROOT.TH1.AddDirectory(0)
 
+parser = argparse.ArgumentParser()
+parser.add_argument('--era', default='2016')
+args = parser.parse_args()
 
-bin_cfgs = [
+bin_cfgs_2016 = [
     {
         'name': 'ID_pt_bins_inc_eta',
         'var': 'm_ll(50,75,125)',
         'tag': 'trg_t_Ele25eta2p1WPTight',
         'probe': 'id_p',
         'binvar_x': 'pt_p',
-        'bins_x': [10., 20., 25., 30., 40., 50., 100., 200., 1000.],
+        'bins_x': [10., 15., 20., 25., 30., 40., 50., 100., 200., 1000.],
         'binvar_y': 'abs(sc_eta_p)',
         'bins_y': [0, 2.5]
     },
@@ -26,9 +30,9 @@ bin_cfgs = [
         'tag': 'trg_t_Ele25eta2p1WPTight',
         'probe': 'id_p',
         'binvar_x': 'pt_p',
-        'bins_x': [10., 20., 25., 30., 40., 50., 100., 200., 1000.],
+        'bins_x': [10., 15., 20., 25., 30., 40., 50., 100., 200., 1000.],
         'binvar_y': 'abs(sc_eta_p)',
-        'bins_y': [0, 1.0, 1.4442, 1.56, 2.1, 2.5]
+        'bins_y': [0, 1.0, 1.479, 1.653, 2.1, 2.5]
     },
     {
         'name': 'Iso_pt_bins_inc_eta',
@@ -36,7 +40,17 @@ bin_cfgs = [
         'tag': 'trg_t_Ele25eta2p1WPTight && id_p',
         'probe': 'iso_p < 0.10',
         'binvar_x': 'pt_p',
-        'bins_x': [10., 20., 25., 30., 40., 50., 100., 200., 1000.],
+        'bins_x': [10., 15., 20., 25., 30., 40., 50., 100., 200., 1000.],
+        'binvar_y': 'abs(sc_eta_p)',
+        'bins_y': [0, 2.5]
+    },
+    {
+        'name': 'LooseIso_pt_bins_inc_eta',
+        'var': 'm_ll(50,75,125)',
+        'tag': 'trg_t_Ele25eta2p1WPTight && id_p',
+        'probe': 'iso_p < 0.15',
+        'binvar_x': 'pt_p',
+        'bins_x': [10., 15., 20., 25., 30., 40., 50., 100., 200., 1000.],
         'binvar_y': 'abs(sc_eta_p)',
         'bins_y': [0, 2.5]
     },
@@ -46,9 +60,19 @@ bin_cfgs = [
         'tag': 'trg_t_Ele25eta2p1WPTight && id_p',
         'probe': 'iso_p < 0.10',
         'binvar_x': 'pt_p',
-        'bins_x': [10., 20., 25., 30., 40., 50., 100., 200., 1000.],
+        'bins_x': [10., 15., 20., 25., 30., 40., 50., 100., 200., 1000.],
         'binvar_y': 'abs(sc_eta_p)',
-        'bins_y': [0, 1.0, 1.4442, 1.56, 2.1, 2.5]
+        'bins_y': [0, 1.0, 1.479, 1.653, 2.1, 2.5]
+    },
+    {
+        'name': 'LooseIso_pt_eta_bins',
+        'var': 'm_ll(50,75,125)',
+        'tag': 'trg_t_Ele25eta2p1WPTight && id_p',
+        'probe': 'iso_p < 0.15',
+        'binvar_x': 'pt_p',
+        'bins_x': [10., 15., 20., 25., 30., 40., 50., 100., 200., 1000.],
+        'binvar_y': 'abs(sc_eta_p)',
+        'bins_y': [0, 1.0, 1.479, 1.653, 2.1, 2.5]
     },
     {
         'name': 'AIso1_pt_bins_inc_eta',
@@ -68,7 +92,7 @@ bin_cfgs = [
         'binvar_x': 'pt_p',
         'bins_x': [10., 20., 25., 30., 40., 50., 100., 1000.],
         'binvar_y': 'abs(sc_eta_p)',
-        'bins_y': [0, 1.0, 1.4442, 1.56, 2.1, 2.5]
+        'bins_y': [0, 1.0, 1.479, 1.653, 2.1, 2.5]
     },
     {
         'name': 'AIso2_pt_bins_inc_eta',
@@ -88,7 +112,7 @@ bin_cfgs = [
         'binvar_x': 'pt_p',
         'bins_x': [10., 20., 25., 30., 40., 50., 100., 1000.],
         'binvar_y': 'abs(sc_eta_p)',
-        'bins_y': [0, 1.0, 1.4442, 1.56, 2.1, 2.5]
+        'bins_y': [0, 1.0, 1.479, 1.653, 2.1, 2.5]
     },
     {
         'name': 'Trg_Iso_pt_bins_inc_eta',
@@ -108,7 +132,7 @@ bin_cfgs = [
         'binvar_x': 'pt_p',
         'bins_x': [10., 20., 22., 24., 26., 28., 30., 40., 50., 100., 200., 1000.],
         'binvar_y': 'abs(sc_eta_p)',
-        'bins_y': [0, 1.0, 1.4442, 1.56, 2.1, 2.5]
+        'bins_y': [0, 1.0, 1.479, 1.653, 2.1, 2.5]
     },
     {
         'name': 'Trg_AIso1_pt_bins_inc_eta',
@@ -116,20 +140,10 @@ bin_cfgs = [
         'tag': 'trg_t_Ele25eta2p1WPTight && id_p && iso_p >= 0.10 && iso_p < 0.20',
         'probe': 'trg_p_Ele25eta2p1WPTight',
         'binvar_x': 'pt_p',
-        'bins_x': [10., 20., 22., 24., 26., 28., 30., 40., 50., 100. 1000.],
+        'bins_x': [10., 20., 22., 24., 26., 28., 30., 40., 50., 100., 1000.],
         'binvar_y': 'abs(sc_eta_p)',
         'bins_y': [0, 2.5]
     },
-    # {
-    #     'name': 'Trg_AIso1_pt_eta_bins',
-    #     'var': 'm_ll(50,75,125)',
-    #     'tag': 'trg_t_Ele25eta2p1WPTight && id_p && iso_p >= 0.10 && iso_p < 0.20',
-    #     'probe': 'trg_p_Ele25eta2p1WPTight',
-    #     'binvar_x': 'pt_p',
-    #     'bins_x': [10., 20., 22., 24., 26., 28., 30., 40., 50., 100., 200., 1000.],
-    #     'binvar_y': 'abs(sc_eta_p)',
-    #     'bins_y': [0, 1.0, 1.4442, 1.56, 2.1, 2.5]
-    # },
     {
         'name': 'Trg_AIso2_pt_bins_inc_eta',
         'var': 'm_ll(50,75,125)',
@@ -139,18 +153,198 @@ bin_cfgs = [
         'bins_x': [10., 20., 22., 24., 26., 28., 30., 40., 50., 100., 1000.],
         'binvar_y': 'abs(sc_eta_p)',
         'bins_y': [0, 2.5]
-    },
-    # {
-    #     'name': 'Trg_AIso2_pt_eta_bins',
-    #     'var': 'm_ll(50,75,125)',
-    #     'tag': 'trg_t_Ele25eta2p1WPTight && id_p && iso_p >= 0.20 && iso_p < 0.50',
-    #     'probe': 'trg_p_Ele25eta2p1WPTight',
-    #     'binvar_x': 'pt_p',
-    #     'bins_x': [10., 20., 22., 24., 26., 28., 30., 40., 50., 100., 200., 1000.],
-    #     'binvar_y': 'abs(sc_eta_p)',
-    #     'bins_y': [0, 1.0, 1.4442, 1.56, 2.1, 2.5]
-    # }
+    }
 ]
+
+bin_cfgs_2017 = [
+    {
+        'name': 'ID_pt_bins_inc_eta',
+        'var': 'm_ll(50,75,125)',
+        'tag': 'trg_t_Ele27WPTight',
+        'probe': 'id_p',
+        'binvar_x': 'pt_p',
+        'bins_x': [10., 15., 20., 25., 30., 40., 50., 100., 200., 1000.],
+        'binvar_y': 'abs(sc_eta_p)',
+        'bins_y': [0, 2.5]
+    },
+    {
+        'name': 'ID_pt_eta_bins',
+        'var': 'm_ll(50,75,125)',
+        'tag': 'trg_t_Ele27WPTight',
+        'probe': 'id_p',
+        'binvar_x': 'pt_p',
+        'bins_x': [10., 15., 20., 25., 30., 40., 50., 100., 200., 1000.],
+        'binvar_y': 'abs(sc_eta_p)',
+        'bins_y': [0, 1.0, 1.479, 1.653, 2.1, 2.5]
+    },
+    {
+        'name': 'Iso_pt_bins_inc_eta',
+        'var': 'm_ll(50,75,125)',
+        'tag': 'trg_t_Ele27WPTight && id_p',
+        'probe': 'iso_p < 0.10',
+        'binvar_x': 'pt_p',
+        'bins_x': [10., 15., 20., 25., 30., 40., 50., 100., 200., 1000.],
+        'binvar_y': 'abs(sc_eta_p)',
+        'bins_y': [0, 2.5]
+    },
+    {
+        'name': 'LooseIso_pt_bins_inc_eta',
+        'var': 'm_ll(50,75,125)',
+        'tag': 'trg_t_Ele27WPTight && id_p',
+        'probe': 'iso_p < 0.15',
+        'binvar_x': 'pt_p',
+        'bins_x': [10., 15., 20., 25., 30., 40., 50., 100., 200., 1000.],
+        'binvar_y': 'abs(sc_eta_p)',
+        'bins_y': [0, 2.5]
+    },
+    {
+        'name': 'Iso_pt_eta_bins',
+        'var': 'm_ll(50,75,125)',
+        'tag': 'trg_t_Ele27WPTight && id_p',
+        'probe': 'iso_p < 0.10',
+        'binvar_x': 'pt_p',
+        'bins_x': [10., 15., 20., 25., 30., 40., 50., 100., 200., 1000.],
+        'binvar_y': 'abs(sc_eta_p)',
+        'bins_y': [0, 1.0, 1.479, 1.653, 2.1, 2.5]
+    },
+    {
+        'name': 'LooseIso_pt_eta_bins',
+        'var': 'm_ll(50,75,125)',
+        'tag': 'trg_t_Ele27WPTight && id_p',
+        'probe': 'iso_p < 0.15',
+        'binvar_x': 'pt_p',
+        'bins_x': [10., 15., 20., 25., 30., 40., 50., 100., 200., 1000.],
+        'binvar_y': 'abs(sc_eta_p)',
+        'bins_y': [0, 1.0, 1.479, 1.653, 2.1, 2.5]
+    },
+    {
+        'name': 'AIso1_pt_bins_inc_eta',
+        'var': 'm_ll(50,75,125)',
+        'tag': 'trg_t_Ele27WPTight && id_p',
+        'probe': 'iso_p >= 0.10 && iso_p < 0.20',
+        'binvar_x': 'pt_p',
+        'bins_x': [10., 20., 25., 30., 40., 50., 100., 1000.],
+        'binvar_y': 'abs(sc_eta_p)',
+        'bins_y': [0, 2.5]
+    },
+    {
+        'name': 'AIso1_pt_eta_bins',
+        'var': 'm_ll(50,75,125)',
+        'tag': 'trg_t_Ele27WPTight && id_p',
+        'probe': 'iso_p >= 0.10 && iso_p < 0.20',
+        'binvar_x': 'pt_p',
+        'bins_x': [10., 20., 25., 30., 40., 50., 100., 1000.],
+        'binvar_y': 'abs(sc_eta_p)',
+        'bins_y': [0, 1.0, 1.479, 1.653, 2.1, 2.5]
+    },
+    {
+        'name': 'AIso2_pt_bins_inc_eta',
+        'var': 'm_ll(50,75,125)',
+        'tag': 'trg_t_Ele27WPTight && id_p',
+        'probe': 'iso_p >= 0.20 && iso_p < 0.50',
+        'binvar_x': 'pt_p',
+        'bins_x': [10., 20., 25., 30., 40., 50., 100., 1000.],
+        'binvar_y': 'abs(sc_eta_p)',
+        'bins_y': [0, 2.5]
+    },
+    {
+        'name': 'AIso2_pt_eta_bins',
+        'var': 'm_ll(50,75,125)',
+        'tag': 'trg_t_Ele27WPTight && id_p',
+        'probe': 'iso_p >= 0.20 && iso_p < 0.50',
+        'binvar_x': 'pt_p',
+        'bins_x': [10., 20., 25., 30., 40., 50., 100., 1000.],
+        'binvar_y': 'abs(sc_eta_p)',
+        'bins_y': [0, 1.0, 1.479, 1.653, 2.1, 2.5]
+    },
+    {
+        'name': 'Trg_Iso_pt_bins_inc_eta',
+        'var': 'm_ll(50,75,125)',
+        'tag': 'trg_t_Ele27WPTight && id_p && iso_p < 0.10',
+        'probe': 'trg_p_Ele27WPTight',
+        'binvar_x': 'pt_p',
+        'bins_x': [10., 20., 25., 26., 27., 28., 29., 30., 40., 50., 100., 200., 1000.],
+        'binvar_y': 'abs(sc_eta_p)',
+        'bins_y': [0, 2.5]
+    },
+    {
+        'name': 'Trg_Iso_pt_eta_bins',
+        'var': 'm_ll(50,75,125)',
+        'tag': 'trg_t_Ele27WPTight && id_p && iso_p < 0.10',
+        'probe': 'trg_p_Ele27WPTight',
+        'binvar_x': 'pt_p',
+        'bins_x': [10., 20., 25., 26., 27., 28., 29., 30., 40., 50., 100., 200., 1000.],
+        'binvar_y': 'abs(sc_eta_p)',
+        'bins_y': [0, 1.0, 1.479, 1.653, 2.1, 2.5]
+    },
+    {
+        'name': 'Trg_AIso1_pt_bins_inc_eta',
+        'var': 'm_ll(50,75,125)',
+        'tag': 'trg_t_Ele27WPTight && id_p && iso_p >= 0.10 && iso_p < 0.20',
+        'probe': 'trg_p_Ele27WPTight',
+        'binvar_x': 'pt_p',
+        'bins_x': [10., 20., 25., 26., 27., 28., 29., 30., 40., 50., 100., 200., 1000.],
+        'binvar_y': 'abs(sc_eta_p)',
+        'bins_y': [0, 2.5]
+    },
+    {
+        'name': 'Trg_AIso2_pt_bins_inc_eta',
+        'var': 'm_ll(50,75,125)',
+        'tag': 'trg_t_Ele27WPTight && id_p && iso_p >= 0.20 && iso_p < 0.50',
+        'probe': 'trg_p_Ele27WPTight',
+        'binvar_x': 'pt_p',
+        'bins_x': [10., 20., 25., 26., 27., 28., 29., 30., 40., 50., 100., 200., 1000.],
+        'binvar_y': 'abs(sc_eta_p)',
+        'bins_y': [0, 2.5]
+    },
+    {
+        'name': 'Trg35_Iso_pt_bins_inc_eta',
+        'var': 'm_ll(50,75,125)',
+        'tag': 'trg_t_Ele25WPTight && id_p && iso_p < 0.10',
+        'probe': 'trg_p_Ele25WPTight',
+        'binvar_x': 'pt_p',
+        'bins_x': [10., 20., 25., 30., 34., 36., 38., 40., 50., 100., 200., 1000.],
+        'binvar_y': 'abs(sc_eta_p)',
+        'bins_y': [0, 2.5]
+    },
+    {
+        'name': 'Trg35_Iso_pt_eta_bins',
+        'var': 'm_ll(50,75,125)',
+        'tag': 'trg_t_Ele25WPTight && id_p && iso_p < 0.10',
+        'probe': 'trg_p_Ele25WPTight',
+        'binvar_x': 'pt_p',
+        'bins_x': [10., 20., 25., 30., 34., 36., 38., 40., 50., 100., 200., 1000.],
+        'binvar_y': 'abs(sc_eta_p)',
+        'bins_y': [0, 1.0, 1.479, 1.653, 2.1, 2.5]
+    },
+    {
+        'name': 'Trg35_AIso1_pt_bins_inc_eta',
+        'var': 'm_ll(50,75,125)',
+        'tag': 'trg_t_Ele25WPTight && id_p && iso_p >= 0.10 && iso_p < 0.20',
+        'probe': 'trg_p_Ele25WPTight',
+        'binvar_x': 'pt_p',
+        'bins_x': [10., 20., 25., 30., 34., 36., 38., 40., 50., 100., 200., 1000.],
+        'binvar_y': 'abs(sc_eta_p)',
+        'bins_y': [0, 2.5]
+    },
+    {
+        'name': 'Trg35_AIso2_pt_bins_inc_eta',
+        'var': 'm_ll(50,75,125)',
+        'tag': 'trg_t_Ele25WPTight && id_p && iso_p >= 0.20 && iso_p < 0.50',
+        'probe': 'trg_p_Ele25WPTight',
+        'binvar_x': 'pt_p',
+        'bins_x': [10., 20., 25., 30., 34., 36., 38., 40., 50., 100., 200., 1000.],
+        'binvar_y': 'abs(sc_eta_p)',
+        'bins_y': [0, 2.5]
+    }
+]
+
+if args.era=='2016': 
+	bin_cfgs=[cfg for cfg in bin_cfgs_2016]
+elif args.era=='2017':
+	bin_cfgs=[cfg for cfg in bin_cfgs_2017]
+else:
+	raise ValueError("Please select era: 2016 or 2017")
 
 drawlist = []
 andable = set()
@@ -186,18 +380,18 @@ for cfg in bin_cfgs:
 
 
 trees = {
-    'DYJetsToLL': analysis.TTreeEvaluator('ZeeTP', 'output/HTT2016Studies_July19/DYJetsToLL.root'),
-    'Data': analysis.TTreeEvaluator('ZeeTP', 'output/HTT2016Studies_July19/SingleElectron.root')
-}
+    #~ 'DYJetsToLL': analysis.TTreeEvaluator('inclusive/ZeeTP', 'output/HTT2016Studies_Jan15/ZeeTP/DYJetsToLLM50.root'),
+    'Data': analysis.TTreeEvaluator('ee_nominal/ZeeTP', 'tp_files/SingleElectron.root'),
+    'Embedding':  analysis.TTreeEvaluator('ee_nominal/ZeeTP', 'tp_files/ElectronEmbedding.root')
 
-
-# sys.exit(0)
+}   
 
 for sample in trees:
-    outfile = ROOT.TFile('ZeeTP_%s.root' % sample, 'RECREATE')
+    outfile = ROOT.TFile('output/ZeeTP_%s.root' % sample, 'RECREATE')
     hists = trees[sample].Draw(drawlist, compiled=True)
 
     i = 0
+
     for cfg in bin_cfgs:
         wsp = ROOT.RooWorkspace('wsp_'+cfg['name'], '')
         var = wsp.factory('m_ll[100,75,125]')
