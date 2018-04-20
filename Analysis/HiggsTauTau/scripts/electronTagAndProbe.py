@@ -300,8 +300,8 @@ bin_cfgs_2017 = [
     {
         'name': 'Trg35_Iso_pt_bins_inc_eta',
         'var': 'm_ll(50,75,125)',
-        'tag': 'trg_t_Ele25WPTight && id_p && iso_p < 0.10',
-        'probe': 'trg_p_Ele25WPTight',
+        'tag': 'trg_t_Ele35WPTight && id_p && iso_p < 0.10',
+        'probe': 'trg_p_Ele35WPTight',
         'binvar_x': 'pt_p',
         'bins_x': [10., 20., 25., 30., 34., 36., 38., 40., 50., 100., 200., 1000.],
         'binvar_y': 'abs(sc_eta_p)',
@@ -310,8 +310,8 @@ bin_cfgs_2017 = [
     {
         'name': 'Trg35_Iso_pt_eta_bins',
         'var': 'm_ll(50,75,125)',
-        'tag': 'trg_t_Ele25WPTight && id_p && iso_p < 0.10',
-        'probe': 'trg_p_Ele25WPTight',
+        'tag': 'trg_t_Ele35WPTight && id_p && iso_p < 0.10',
+        'probe': 'trg_p_Ele35WPTight',
         'binvar_x': 'pt_p',
         'bins_x': [10., 20., 25., 30., 34., 36., 38., 40., 50., 100., 200., 1000.],
         'binvar_y': 'abs(sc_eta_p)',
@@ -320,8 +320,8 @@ bin_cfgs_2017 = [
     {
         'name': 'Trg35_AIso1_pt_bins_inc_eta',
         'var': 'm_ll(50,75,125)',
-        'tag': 'trg_t_Ele25WPTight && id_p && iso_p >= 0.10 && iso_p < 0.20',
-        'probe': 'trg_p_Ele25WPTight',
+        'tag': 'trg_t_Ele35WPTight && id_p && iso_p >= 0.10 && iso_p < 0.20',
+        'probe': 'trg_p_Ele35WPTight',
         'binvar_x': 'pt_p',
         'bins_x': [10., 20., 25., 30., 34., 36., 38., 40., 50., 100., 200., 1000.],
         'binvar_y': 'abs(sc_eta_p)',
@@ -330,8 +330,8 @@ bin_cfgs_2017 = [
     {
         'name': 'Trg35_AIso2_pt_bins_inc_eta',
         'var': 'm_ll(50,75,125)',
-        'tag': 'trg_t_Ele25WPTight && id_p && iso_p >= 0.20 && iso_p < 0.50',
-        'probe': 'trg_p_Ele25WPTight',
+        'tag': 'trg_t_Ele35WPTight && id_p && iso_p >= 0.20 && iso_p < 0.50',
+        'probe': 'trg_p_Ele35WPTight',
         'binvar_x': 'pt_p',
         'bins_x': [10., 20., 25., 30., 34., 36., 38., 40., 50., 100., 200., 1000.],
         'binvar_y': 'abs(sc_eta_p)',
@@ -380,9 +380,9 @@ for cfg in bin_cfgs:
 
 
 trees = {
-    #~ 'DYJetsToLL': analysis.TTreeEvaluator('inclusive/ZeeTP', 'output/HTT2016Studies_Jan15/ZeeTP/DYJetsToLLM50.root'),
-    'Data': analysis.TTreeEvaluator('ee_nominal/ZeeTP', 'tp_files/SingleElectron.root'),
-    'Embedding':  analysis.TTreeEvaluator('ee_nominal/ZeeTP', 'tp_files/ElectronEmbedding.root')
+    'DYJetsToLL': analysis.TTreeEvaluator('ee_nominal/ZeeTP', 'tp_files/DYJetsToLL_2017.root'),
+    'Data': analysis.TTreeEvaluator('ee_nominal/ZeeTP', 'tp_files/SingleElectron2017.root'),
+    'Embedding':  analysis.TTreeEvaluator('ee_nominal/ZeeTP', 'tp_files/ElectronEmbedding2017.root')
 
 }   
 

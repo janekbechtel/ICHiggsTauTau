@@ -253,9 +253,9 @@ def main(filename, name, plot_dir, sig_model, bkg_model, title, particle, isMC, 
         plot.Set(axis.GetYaxis().SetTitle('Events / %g GeV' % width))
         plot.DrawTitle(pads[1], 'p_{T}: [%g, %g] GeV #eta: [%g, %g]' % (b[2], b[3], b[4], b[5]), 1)
         if isMC:
-            plot.DrawTitle(pads[1], 'MC Summer16', 3)
+            plot.DrawTitle(pads[1], 'MC Fall17', 3)
         else:
-            plot.DrawTitle(pads[1], '35.87 fb^{-1} (13 TeV)', 3)
+            plot.DrawTitle(pads[1], '8.99 fb^{-1} (13 TeV)', 3)
         #plot.DrawTitle(pads[1], 'Fail Region', 1)
         latex.DrawLatex(0.63, 0.75, '#chi^{2} = %.2f' % (xframe2.chiSquare("AllFail", "DataFail", nparams)))
         latex.SetTextFont(font)

@@ -420,7 +420,8 @@ for cfg in bin_cfgs:
 
 
 trees = {
-  #  'Embedding': analysis.TTreeEvaluator('mm_nominal/ZmmTP', 'tp_files/MuonEmbedding2017.root'),
+    'Embedding': analysis.TTreeEvaluator('mm_nominal/ZmmTP', 'tp_files/MuonEmbedding2017.root'),
+    'DY': analysis.TTreeEvaluator('mm_nominal/ZmmTP', 'tp_files/DY_2017.root'),
     'Data': analysis.TTreeEvaluator('mm_nominal/ZmmTP', 'tp_files/DoubleMuon2017.root')
 }
         
