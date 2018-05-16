@@ -110,8 +110,8 @@ def main(files, label, output, draw_options, title, y_range, ratio_y_range, binn
         #~ plot.DrawCMSLogo(pads[0], args.title, bin_label, 0, 0.16, 0.035, 1.2, cmsTextSize=0.5)
         plot.DrawTitle(pads[0], title+' - '+bin_label, 1)
 
-        plot.DrawTitle(pads[0], '8.99 fb^{-1} (13 TeV)', 3)
-
+        #plot.DrawTitle(pads[0], '18.99 fb^{-1} (13 TeV)', 3)
+        plot.DrawTitle(pads[0], '41.29 fb^{-1} (13 TeV)', 3)
         if ratio_to is not None:
             pads[1].cd()
             pads[1].SetLogx(True)

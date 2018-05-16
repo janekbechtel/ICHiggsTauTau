@@ -336,7 +336,68 @@ bin_cfgs_2017 = [
         'bins_x': [10., 20., 25., 30., 34., 36., 38., 40., 50., 100., 200., 1000.],
         'binvar_y': 'abs(sc_eta_p)',
         'bins_y': [0, 2.5]
-    }
+    },
+    {
+        'name': 'Trg32_Iso_pt_bins_inc_eta',
+        'var': 'm_ll(50,75,125)',
+        'tag': 'trg_t_Ele32WPTight && id_p && iso_p < 0.10',
+        'probe': 'trg_p_Ele32WPTight',
+        'binvar_x': 'pt_p',
+        'bins_x': [10., 20., 25., 30., 34., 36., 38., 40., 50., 100., 200., 1000.],
+        'binvar_y': 'abs(sc_eta_p)',
+        'bins_y': [0, 2.5]
+    },
+    {
+        'name': 'Trg32_Iso_pt_eta_bins',
+        'var': 'm_ll(50,75,125)',
+        'tag': 'trg_t_Ele32WPTight && id_p && iso_p < 0.10',
+        'probe': 'trg_p_Ele32WPTight',
+        'binvar_x': 'pt_p',
+        'bins_x': [10., 20., 25., 30., 34., 36., 38., 40., 50., 100., 200., 1000.],
+        'binvar_y': 'abs(sc_eta_p)',
+        'bins_y': [0, 1.0, 1.479, 1.653, 2.1, 2.5]
+    },
+    {
+        'name': 'Trg32_AIso1_pt_bins_inc_eta',
+        'var': 'm_ll(50,75,125)',
+        'tag': 'trg_t_Ele32WPTight && id_p && iso_p >= 0.10 && iso_p < 0.20',
+        'probe': 'trg_p_Ele32WPTight',
+        'binvar_x': 'pt_p',
+        'bins_x': [10., 20., 25., 30., 34., 36., 38., 40., 50., 100., 200., 1000.],
+        'binvar_y': 'abs(sc_eta_p)',
+        'bins_y': [0, 2.5]
+    },
+    {
+        'name': 'Trg32_AIso2_pt_bins_inc_eta',
+        'var': 'm_ll(50,75,125)',
+        'tag': 'trg_t_Ele32WPTight && id_p && iso_p >= 0.20 && iso_p < 0.50',
+        'probe': 'trg_p_Ele32WPTight',
+        'binvar_x': 'pt_p',
+        'bins_x': [10., 20., 25., 30., 34., 36., 38., 40., 50., 100., 200., 1000.],
+        'binvar_y': 'abs(sc_eta_p)',
+        'bins_y': [0, 2.5]
+    },
+    {
+        'name': 'Trg32_or_Trg35_pt_bins_inc_eta',
+        'var': 'm_ll(50,75,125)',
+        'tag': '(trg_t_Ele35WPTight || trg_t_Ele32WPTight) && id_p && iso_p < 0.10',
+        'probe': '(trg_p_Ele35WPTight || trg_p_Ele32WPTight)',
+        'binvar_x': 'pt_p',
+        'bins_x': [10., 20., 25., 30., 34., 36., 38., 40., 50., 100., 200., 1000.],
+        'binvar_y': 'abs(sc_eta_p)',
+        'bins_y': [0, 2.5]
+    },
+    {
+        'name': 'Trg32_or_Trg35_Iso_pt_eta_bins',
+        'var': 'm_ll(50,75,125)',
+        'tag': '(trg_t_Ele35WPTight || trg_t_Ele32WPTight) && id_p && iso_p < 0.10',
+        'probe': '(trg_p_Ele35WPTight || trg_p_Ele32WPTight)',
+        'binvar_x': 'pt_p',
+        'bins_x': [10., 20., 25., 30., 34., 36., 38., 40., 50., 100., 200., 1000.],
+        'binvar_y': 'abs(sc_eta_p)',
+        'bins_y': [0, 1.0, 1.479, 1.653, 2.1, 2.5]
+    },
+
 ]
 
 if args.era=='2016': 
@@ -380,7 +441,7 @@ for cfg in bin_cfgs:
 
 
 trees = {
-    'DYJetsToLL': analysis.TTreeEvaluator('ee_nominal/ZeeTP', 'tp_files/DYJetsToLL_2017.root'),
+    'DYJetsToLL': analysis.TTreeEvaluator('ee_nominal/ZeeTP', 'tp_files/DYJetsToLL_ee_2017.root'),
     'Data': analysis.TTreeEvaluator('ee_nominal/ZeeTP', 'tp_files/SingleElectron2017.root'),
     'Embedding':  analysis.TTreeEvaluator('ee_nominal/ZeeTP', 'tp_files/ElectronEmbedding2017.root')
 

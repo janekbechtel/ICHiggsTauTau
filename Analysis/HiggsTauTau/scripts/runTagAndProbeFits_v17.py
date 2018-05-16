@@ -13,10 +13,14 @@ parser.add_argument(
 parser.add_argument(
     '--plot', action="store_true")
 args = parser.parse_args()
-if "m" in args.channel:
-    dir = "output/tag_and_probe_m_v17_1/"
+if "sm" in args.channel:
+    dir = "output/tag_and_probe_sm_v17_1/"
+elif "dm" in args.channel:
+    dir = "output/tag_and_probe_dm_v17_1/"
 elif "e" in args.channel:
     dir = "output/tag_and_probe_e_v17_1/"
+else:
+    "Only Options are sm / dm / e !!"
 parameters = {
     "Trg_AIso1_pt_bins_inc_eta": {
         "SMALL": "Trg_AIso1inc",
@@ -85,6 +89,35 @@ parameters = {
         "SMALL": "eff.Trg_Iso",
         "DIR": dir,
         "TITLE": "Trg IsoMu27",
+        "BKG": "Exponential",
+        "SIG": "DoubleVCorr"
+    },
+
+    "Trg24_Iso_pt_bins_inc_eta": {
+        "SMALL": "eff.Trg_Iso",
+        "DIR": dir,
+        "TITLE": "Trg IsoMu24",
+        "BKG": "Exponential",
+        "SIG": "DoubleVCorr"
+    },
+    "Trg24_Iso_pt_eta_bins": {
+        "SMALL": "eff.Trg_Iso",
+        "DIR": dir,
+        "TITLE": "Trg IsoMu24",
+        "BKG": "Exponential",
+        "SIG": "DoubleVCorr"
+    },
+    "Trg_IsoMu27_or_IsoMu24_pt_eta_bins": {
+        "SMALL": "eff.Trg_Iso",
+        "DIR": dir,
+        "TITLE": "Trg IsoMu24 or IsoMu27",
+        "BKG": "Exponential",
+        "SIG": "DoubleVCorr"
+    },
+    "Trg_IsoMu27_or_IsoMu24_pt_bins_inc_eta": {
+        "SMALL": "eff.Trg_Iso",
+        "DIR": dir,
+        "TITLE": "Trg IsoMu24 or IsoMu24",
         "BKG": "Exponential",
         "SIG": "DoubleVCorr"
     }
@@ -167,6 +200,34 @@ el_parameters = {
         "BKG": "Exponential",
         "SIG": "DoubleVCorr"
     },
+        "Trg32_AIso1_pt_bins_inc_eta": {
+        "SMALL": "eff.Trg32_AIso1inc",
+        "DIR": dir,
+        "TITLE": "Trg El32eta2p1WPTight | Iso_{rel} #in [0.10,0.20]",
+        "BKG": "Exponential",
+        "SIG": "DoubleVCorr"
+    },
+        "Trg32_AIso2_pt_bins_inc_eta": {
+        "SMALL": "eff.Trg32_AIso2inc",
+        "DIR": dir,
+        "TITLE": "Trg El32eta2p1WPTight | Iso_{rel} #in [0.20,0.50]",
+        "BKG": "Exponential",
+        "SIG": "DoubleVCorr"
+    },
+    "Trg32_Iso_pt_eta_bins": {
+        "SMALL": "eff.Trg32_Iso",
+        "DIR": dir,
+        "TITLE": "Trg El32eta2p1WPTight",
+        "BKG": "Exponential",
+        "SIG": "DoubleVCorr"
+    },
+    "Trg32_or_Trg35_Iso_pt_eta_bins": {
+        "SMALL": "eff.Trg",
+        "DIR": dir,
+        "TITLE": "Trg El32eta2p1WPTight or Trg El35eta2p1WPTight",
+        "BKG": "Exponential",
+        "SIG": "DoubleVCorr"
+    },
 }
 mu_sliceing = {
     "ID_pt_eta_bins": {
@@ -227,6 +288,24 @@ mu_sliceing = {
         "SMALL": "eff.Trg_Iso",
         "DIR": dir,
         "TITLE": "Trg IsoMu27",
+        "BKG": "Exponential",
+        "SIG": "DoubleVCorr",
+        "y_range": [0.0,1.0],
+        "ratio_y_range": [0.95,1.2]
+    },
+    "Trg24_Iso_pt_eta_bins": {
+        "SMALL": "eff.Trg_Iso",
+        "DIR": dir,
+        "TITLE": "Trg IsoMu24",
+        "BKG": "Exponential",
+        "SIG": "DoubleVCorr",
+        "y_range": [0.0,1.0],
+        "ratio_y_range": [0.95,1.2]
+    },
+    "Trg_IsoMu27_or_IsoMu24_pt_eta_bins": {
+        "SMALL": "eff.Trg_Iso",
+        "DIR": dir,
+        "TITLE": "Trg IsoMu24 or IsoMu27",
         "BKG": "Exponential",
         "SIG": "DoubleVCorr",
         "y_range": [0.0,1.0],
@@ -325,12 +404,52 @@ el_sliceing = {
         "y_range": [0.0,1.0],
         "ratio_y_range": [0.02,1.98]
     },
+    "Trg32_Iso_pt_eta_bins": {
+        "SMALL": "eff.Trg_Iso",
+        "DIR": dir,
+        "TITLE": "Trg Ele32",
+        "BKG": "Exponential",
+        "SIG": "DoubleVCorr",
+        "y_range": [0.0,1.0],
+        "ratio_y_range": [0.95,1.2]
+    },
+    "Trg32_AIso1_pt_bins_inc_eta": {
+        "SMALL": "eff.Trg32_AIso1inc",
+        "DIR": dir,
+        "TITLE": "Trg Ele32 | Iso_{rel} #in [0.10,0.20]",
+        "BKG": "Exponential",
+        "SIG": "DoubleVCorr",
+        "y_range": [0.0,1.0],
+        "ratio_y_range": [0.02,1.98]
+    },
+    "Trg32_AIso2_pt_bins_inc_eta": {
+        "SMALL": "eff.Trg32_Iso",
+        "DIR": dir,
+        "TITLE": "Trg Ele32 | Iso_{rel} #in [0.20,0.50]",
+        "BKG": "Exponential",
+        "SIG": "DoubleVCorr",
+        "y_range": [0.0,1.0],
+        "ratio_y_range": [0.02,1.98]
+    },
+    "Trg32_or_Trg35_Iso_pt_eta_bins": {
+        "SMALL": "eff.Trg",
+        "DIR": dir,
+        "TITLE": "Trg Ele32 or Trg Ele35",
+        "BKG": "Exponential",
+        "SIG": "DoubleVCorr",
+        "y_range": [0.0,1.0],
+        "ratio_y_range": [0.1,1.9]
+    },
+
 }
 if args.fit:
     if "m" in args.channel:
         for label in parameters.keys():
             pass
-            filename = ["output/ZmmTP_Embedding.root", "output/ZmmTP_Data.root", "output/ZmmTP_DY.root"]
+            if "sm" in args.channel:
+                filename = ["output/ZmmTP_Embedding.root", "output/ZmmTP_Data_sM.root", "output/ZmmTP_DY.root"]
+            else:
+                filename = ["output/ZmmTP_Embedding.root", "output/ZmmTP_Data.root", "output/ZmmTP_DY.root"]
             dir_ext = ["/embedding", "/data", "/DY"]
             for i, file in enumerate(filename):
                 try:
@@ -371,7 +490,7 @@ if args.fit:
 if args.plot:
     if "m" in args.channel:
         for label in mu_sliceing.keys():
-            files = ["output/ZmmTP_Data_Fits_" + label + ".root",
+            files = ["output/ZmmTP_Data_sM_Fits_" + label + ".root",
                     "output/ZmmTP_Embedding_Fits_" + label + ".root",
                     "output/ZmmTP_DY_Fits_" + label + ".root"
                     ]

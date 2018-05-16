@@ -159,13 +159,13 @@ def main(filename, name, plot_dir, sig_model, bkg_model, title, particle, isMC, 
                             ROOT.RooFit.Minimizer("Minuit2", "Migrad"),
                             ROOT.RooFit.Offset(True),
                             ROOT.RooFit.Extended(True),
-                            ROOT.RooFit.PrintLevel(-1))
+                            ROOT.RooFit.PrintLevel(3))
 
         fitres = wsp.pdf("model").fitTo(wsp.data(dat),
                                         ROOT.RooFit.Minimizer("Minuit2", "Migrad"),
                                         ROOT.RooFit.Offset(True),
                                         ROOT.RooFit.Extended(True),
-                                        ROOT.RooFit.PrintLevel(-1),
+                                        ROOT.RooFit.PrintLevel(3),
                                         ROOT.RooFit.Save())
                             #ROOT.RooFit.Minos())
 
@@ -255,7 +255,8 @@ def main(filename, name, plot_dir, sig_model, bkg_model, title, particle, isMC, 
         if isMC:
             plot.DrawTitle(pads[1], 'MC Fall17', 3)
         else:
-            plot.DrawTitle(pads[1], '8.99 fb^{-1} (13 TeV)', 3)
+            #plot.DrawTitle(pads[1], '18.25 fb^{-1} (13 TeV)', 3)
+            plot.DrawTitle(pads[1], '41.29 fb^{-1} (13 TeV)', 3)
         #plot.DrawTitle(pads[1], 'Fail Region', 1)
         latex.DrawLatex(0.63, 0.75, '#chi^{2} = %.2f' % (xframe2.chiSquare("AllFail", "DataFail", nparams)))
         latex.SetTextFont(font)
