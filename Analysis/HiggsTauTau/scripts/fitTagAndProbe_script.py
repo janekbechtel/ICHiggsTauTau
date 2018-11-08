@@ -2,7 +2,7 @@ import argparse
 import ROOT
 import os
 import CombineHarvester.CombineTools.plotting as plot
-
+import sys
 
 # def parse_arguments():
 #     parser = argparse.ArgumentParser()
@@ -48,10 +48,10 @@ def main(filename, name, plot_dir, sig_model, bkg_model, title, particle, isMC, 
                 [
                     "Voigtian::signal1Pass(m_ll, mean1[90,80,100], width[2.495], sigma1[2,1,3])",
                     "Voigtian::signal2Pass(m_ll, mean2[90,80,100], width,        sigma2[4,2,10])",
-                    "SUM::signalPass(vFrac[0.8,0,1]*signal1Pass, signal2Pass)",
+                    "SUM::signalPass(vFrac[0.7,0,1]*signal1Pass, signal2Pass)",
                     "Voigtian::signal1Fail(m_ll, mean1[90,80,100], width[2.495], sigma1[2,1,3])",
                     "Voigtian::signal2Fail(m_ll, mean2[90,80,100], width,        sigma2[4,2,10])",
-                    "SUM::signalFail(vFrac[0.8,0,1]*signal1Fail, signal2Fail)",
+                    "SUM::signalFail(vFrac[0.7,0,1]*signal1Fail, signal2Fail)",
                 ]
             )
     elif sig_model == 'DoubleVUncorr':
@@ -60,10 +60,10 @@ def main(filename, name, plot_dir, sig_model, bkg_model, title, particle, isMC, 
                 [
                     "Voigtian::signal1Pass(m_ll, mean1p[90,80,100], widthp[2.495], sigma1p[2,1,3])",
                     "Voigtian::signal2Pass(m_ll, mean2p[90,80,100], widthp,        sigma2p[4,2,10])",
-                    "SUM::signalPass(vFracp[0.8,0,1]*signal1Pass, signal2Pass)",
+                    "SUM::signalPass(vFracp[0.7,0,1]*signal1Pass, signal2Pass)",
                     "Voigtian::signal1Fail(m_ll, mean1f[90,80,100], widthf[2.495], sigma1f[2,1,3])",
                     "Voigtian::signal2Fail(m_ll, mean2f[90,80,100], widthf,        sigma2f[4,2,10])",
-                    "SUM::signalFail(vFracf[0.8,0,1]*signal1Fail, signal2Fail)"
+                    "SUM::signalFail(vFracf[0.7,0,1]*signal1Fail, signal2Fail)"
                 ]
             )
     else:
@@ -97,9 +97,9 @@ def main(filename, name, plot_dir, sig_model, bkg_model, title, particle, isMC, 
         wsp.factory(arg)
 
     model_args = [
-        "expr::nSignalPass('efficiency*fSigAll*numTot',efficiency[0,1], fSigAll[0.9,0,1],numTot[1,0,1e10])",
+        "expr::nSignalPass('efficiency*fSigAll*numTot',efficiency[0,1], fSigAll[0,1],numTot[1,0,1e10])",
         "expr::nSignalFail('(1-efficiency)*fSigAll*numTot',efficiency,fSigAll,numTot)",
-        "expr::nBkgPass('effBkg*(1-fSigAll)*numTot',effBkg[0.9,0,1],fSigAll,numTot)",
+        "expr::nBkgPass('effBkg*(1-fSigAll)*numTot',effBkg[0,1],fSigAll,numTot)",
         "expr::nBkgFail('(1-effBkg)*(1-fSigAll)*numTot',effBkg,fSigAll,numTot)",
         "SUM::passing(nSignalPass*signalPass,nBkgPass*backgroundPass)",
         "SUM::failing(nSignalFail*signalFail,nBkgFail*backgroundFail)",
@@ -147,7 +147,11 @@ def main(filename, name, plot_dir, sig_model, bkg_model, title, particle, isMC, 
         yield_tot = wsp.data(dat).sumEntries()
         yield_pass = wsp.data(dat).sumEntries("cat==cat::pass")
         wsp.var("numTot").setVal(yield_tot)
-        wsp.var("efficiency").setVal(yield_pass/yield_tot)
+        try:
+            wsp.var("efficiency").setVal(yield_pass/yield_tot)
+            wsp.var("efficiency").setAsymError(0,0)
+        except ZeroDivisionError:
+            wsp.var("efficiency").setVal(0)
 
         # wsp.pdf("model").fitTo(wsp.data(dat),
         #                        ROOT.RooFit.Minimizer("Minuit2", "Scan"),
@@ -155,21 +159,30 @@ def main(filename, name, plot_dir, sig_model, bkg_model, title, particle, isMC, 
         #                        ROOT.RooFit.Extended(True),
         #                        ROOT.RooFit.PrintLevel(-1))
 
-        wsp.pdf("model").fitTo(wsp.data(dat),
-                            ROOT.RooFit.Minimizer("Minuit2", "Migrad"),
-                            ROOT.RooFit.Offset(True),
-                            ROOT.RooFit.Extended(True),
-                            ROOT.RooFit.PrintLevel(3))
+        # wsp.pdf("model").fitTo(wsp.data(dat),
+        #                     ROOT.RooFit.Minimizer("Minuit2", "Migrad"),
+        #                     ROOT.RooFit.Strategy(2),
+        #                     ROOT.RooFit.Offset(True),
+        #                     ROOT.RooFit.Extended(True),
+        #                     ROOT.RooFit.SumW2Error(True),
+        #                     ROOT.RooFit.PrintLevel(-1),
+        #                     ROOT.RooFit.NumCPU(10))
 
         fitres = wsp.pdf("model").fitTo(wsp.data(dat),
-                                        ROOT.RooFit.Minimizer("Minuit2", "Migrad"),
-                                        ROOT.RooFit.Offset(True),
-                                        ROOT.RooFit.Extended(True),
-                                        ROOT.RooFit.PrintLevel(3),
-                                        ROOT.RooFit.Save())
-                            #ROOT.RooFit.Minos())
+                            ROOT.RooFit.Minimizer("Minuit2", "Migrad"),
+                            #ROOT.RooFit.Strategy(2),
+                            ROOT.RooFit.Offset(True),
+                            ROOT.RooFit.Extended(True),
+                            ROOT.RooFit.SumW2Error(True),
+                            ROOT.RooFit.PrintLevel(-1),
+                            #ROOT.RooFit.NumCPU(10),
+                            ROOT.RooFit.Save())
+                            #ROOT.RooFit.Minos()) 
 
-        fitres.Print()
+        #fitres.Print()
+        #fitres.correlationMatrix().Print()
+
+        #print "The Error for this Bin is: {}".format(wsp.var('efficiency').getError())
 
         res.append((dat, wsp.var('efficiency').getVal(), wsp.var('efficiency').getError()))
 
@@ -191,7 +204,7 @@ def main(filename, name, plot_dir, sig_model, bkg_model, title, particle, isMC, 
         splitData = wsp.data(dat).split(wsp.cat('cat'))
         xframe = wsp.var("m_ll").frame(ROOT.RooFit.Title("Passing"))
         width = (wsp.var("m_ll").getMax() - wsp.var("m_ll").getMin()) / splitData.At(1).numEntries()
-        splitData.At(1).plotOn(xframe, ROOT.RooFit.Name("DataPass"))
+        splitData.At(1).plotOn(xframe, ROOT.RooFit.DataError(ROOT.RooAbsData.Poisson), ROOT.RooFit.Name("DataPass"))
         wsp.pdf("passing").plotOn(xframe,
                                 ROOT.RooFit.Slice(wsp.cat('cat'), "pass"),
                                 ROOT.RooFit.LineColor(ROOT.kBlue),
@@ -231,7 +244,7 @@ def main(filename, name, plot_dir, sig_model, bkg_model, title, particle, isMC, 
         legend1.Draw()
 
         xframe2 = wsp.var("m_ll").frame(ROOT.RooFit.Title("Failing"))
-        splitData.At(0).plotOn(xframe2, ROOT.RooFit.Name("DataFail"))
+        splitData.At(0).plotOn(xframe2, ROOT.RooFit.DataError(ROOT.RooAbsData.Poisson), ROOT.RooFit.Name("DataFail"))
         wsp.pdf("failing").plotOn(xframe2,
                                 ROOT.RooFit.Slice(wsp.cat('cat'), "fail"),
                                 ROOT.RooFit.LineColor(ROOT.kRed),
